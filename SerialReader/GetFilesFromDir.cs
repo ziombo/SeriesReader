@@ -6,7 +6,12 @@ namespace SerialReader
 {
     class GetFilesFromDir : IGetFilesFromDir
     {
-        public IEnumerable<string> GetFiles(string path)
+        string path;
+        public GetFilesFromDir(string _path)
+        {
+            path = _path;
+        }
+        public IEnumerable<string> GetFiles()
         {
             return Directory.GetFiles(path).ToList();
         }

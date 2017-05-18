@@ -19,8 +19,15 @@ namespace SerialReader
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
             FileFinder fileFinder = new FileFinder();
-            fileFinder.GetFilenames(@"D:\Resident Evil The Final Chapter (2016) [1080p] [YTS.AG]");
+            GetFilesFromDir t = new GetFilesFromDir(fileFinder.SelectDirectory());
+           
+            label1.Text = fileFinder.GetFilenames(t).ToString();
         }
     }
 }

@@ -38,11 +38,12 @@ namespace SerialReader
         /// Searches for filenames in given directory
         /// </summary>
         /// <param name="path">Path to folder with movie files</param>
-        public void GetFilenames(IGetFilesFromDir getFilesFromDir)
+        public int GetFilenames(IGetFilesFromDir getFilesFromDir)
         {
             try
             {
                 var fileNames = getFilesFromDir.GetFiles();
+                return fileNames.Count();
             }
             catch(Exception ex)
             {
