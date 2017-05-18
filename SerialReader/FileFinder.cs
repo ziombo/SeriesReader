@@ -24,7 +24,7 @@ namespace SerialReader
         //todo osobna klasa na sprawdzania plików, dodac do github
         public IEnumerable<string> FindFilesByExtensions(string directory)
         {
-            DirectoryInfo d = new DirectoryInfo(directory);//Assuming Test is your Folder
+            DirectoryInfo d = new DirectoryInfo(directory);
             IEnumerable<FileInfo> filesAvi = d.GetFiles("*.avi"); //Getting AVI files
             IEnumerable<FileInfo> filesMp4 = d.GetFiles("*.mp4"); //Getting MP4 files
             IEnumerable<FileInfo> filesMkv = d.GetFiles("*.mkv"); //Getting MKV files
