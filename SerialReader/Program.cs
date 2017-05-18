@@ -14,9 +14,6 @@ namespace SerialReader
         [STAThread]
         static void Main()
         {
-            FileFinder fileFinder = new FileFinder();
-            fileFinder.FindMoviesInFileNames(fileFinder.FindFilesByExtensions(@"D:\"));
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

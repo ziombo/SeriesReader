@@ -5,46 +5,57 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SerialReader
 {
     public class FileFinder
     {
-        public IEnumerable<string> FindMoviesInFileNames(IEnumerable<string> movieNames)
+        // Choose localization (directory where the movies are)
+        /// <summary>
+        /// User picks directory he wants scanned for series.
+        /// </summary>
+        /// <returns>Path as string</returns>
+        public string SelectDirectory()
         {
-            List<string> foundMovieNames = new List<string>();
+            using (var fbd = new FolderBrowserDialog())
+            {
+                DialogResult result = fbd.ShowDialog();
 
-            // Extract movie name from each file
-            movieNames.ToList().ForEach(mn => foundMovieNames.Add(FindNameInFile(mn)));
-
-
-            foundMovieNames.ForEach(mn => Console.WriteLine(mn));
-            return null;
-        }
-        //todo osobna klasa na sprawdzania plików, dodac do github
-        public IEnumerable<string> FindFilesByExtensions(string directory)
-        {
-            DirectoryInfo d = new DirectoryInfo(directory);
-            IEnumerable<FileInfo> filesAvi = d.GetFiles("*.avi"); //Getting AVI files
-            IEnumerable<FileInfo> filesMp4 = d.GetFiles("*.mp4"); //Getting MP4 files
-            IEnumerable<FileInfo> filesMkv = d.GetFiles("*.mkv"); //Getting MKV files
-
-            List<string> allFiles = new List<string>();
-            allFiles.AddRange(filesAvi.Select(f => f.Name));
-            allFiles.AddRange(filesMp4.Select(f => f.Name));
-            allFiles.AddRange(filesMkv.Select(f => f.Name));
-
-            return allFiles;
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    return fbd.SelectedPath;
+                }
+                else
+                {
+                    throw new InvalidOperationException("The directory is not valid");
+                }
+            }
         }
 
-        private string FindNameInFile(string fileName)
+        // Iterate through the directory 
+        /// <summary>
+        /// Searches for filenames in given directory
+        /// </summary>
+        /// <param name="path">Path to folder with movie files</param>
+        public void GetFilenames(IGetFilesFromDir getFilesFromDir)
         {
-            Regex regex = new Regex(@".+[S]\d");
-            Match match = regex.Match(fileName);
-            if (match.Success)
-                return match.Value.Remove(match.Value.Length - 3);
+            try
+            {
+                var fileNames = getFilesFromDir.GetFiles();
+            }
+            catch(Exception ex)
+            {
+                throw new InvalidOperationException(ex.Message);
+            }
 
-            return null;          
         }
+
+        // Get filenames [optional: already sort for movie files. consider]
+
+
+        // Consider: separate class | Extract series names from filenames | Consider: alrdy distinct them?
+
+
     }
 }
