@@ -12,38 +12,21 @@ namespace SerialReader
     public class FileFinder
     {
         // Choose localization (directory where the movies are)
-        /// <summary>
-        /// User picks directory he wants scanned for series.
-        /// </summary>
-        /// <returns>Path as string</returns>
-        public string SelectDirectory()
+        public string SelectDirectory(IFolderBrowserDialogWrapper dialogWrapper)
         {
-            using (var fbd = new FolderBrowserDialog())
-            {
-                DialogResult result = fbd.ShowDialog();
+            string directory = dialogWrapper.GetPathToDirectory();
+            if (!Path.IsPathRooted(directory))
+                throw new InvalidOperationException("The given directory is not valid.");
 
-                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                {
-                    return fbd.SelectedPath;
-                }
-                else
-                {
-                    throw new InvalidOperationException("The directory is not valid");
-                }
-            }
+            return directory;
         }
 
         // Iterate through the directory 
-        /// <summary>
-        /// Searches for filenames in given directory
-        /// </summary>
-        /// <param name="path">Path to folder with movie files</param>
-        public int GetFilenames(IGetFilesFromDir getFilesFromDir)
+        public List<string> GetFilenames(IGetFilesFromDir getFilesFromDir)
         {
             try
             {
-                var fileNames = getFilesFromDir.GetFiles();
-                return fileNames.Count();
+                return getFilesFromDir.GetFiles();
             }
             catch(Exception ex)
             {
@@ -53,7 +36,7 @@ namespace SerialReader
         }
 
         // Get filenames [optional: already sort for movie files. consider]
-
+        // 1) get collection of filenames
 
         // Consider: separate class | Extract series names from filenames | Consider: alrdy distinct them?
 

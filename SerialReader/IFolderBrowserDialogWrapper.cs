@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SerialReader
 {
-    public interface IGetFilesFromDir
+    public interface IFolderBrowserDialogWrapper
     {
-        List<string> GetFiles();
+        string GetPathToDirectory();
     }
 }

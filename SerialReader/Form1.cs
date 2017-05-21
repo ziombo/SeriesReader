@@ -24,10 +24,6 @@ namespace SerialReader
 
         private void button1_Click(object sender, EventArgs e)
         {
-            FileFinder fileFinder = new FileFinder();
-            GetFilesFromDir t = new GetFilesFromDir(fileFinder.SelectDirectory());
-           
-            label1.Text = fileFinder.GetFilenames(t).ToString();
         }
     }
 }

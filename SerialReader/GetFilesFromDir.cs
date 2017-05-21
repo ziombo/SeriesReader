@@ -11,7 +11,7 @@ namespace SerialReader
         {
             path = _path;
         }
-        public IEnumerable<string> GetFiles()
+        public List<string> GetFiles()
         {
             return Directory.GetFiles(path).ToList();
         }
