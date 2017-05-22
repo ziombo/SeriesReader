@@ -36,7 +36,18 @@ namespace SerialReader
         }
 
         // Get filenames [optional: already sort for movie files. consider]
-        // 1) get collection of filenames
+        // 1) collection of filenames as argument
+        // 2) return files that are movies (extension) 
+        public List<string> GetMovieFilesFromAllFiles(List<string> fileNames)
+        {
+            List<string> movieExtensions = new List<string>{ "avi", "mp4", "mkv" };
+
+            // Select fileNames that contain one of the extensions
+            return fileNames.Where(fn => 
+                movieExtensions.Any(me => fn.Contains(me))
+                ).ToList();
+
+        }
 
         // Consider: separate class | Extract series names from filenames | Consider: alrdy distinct them?
 

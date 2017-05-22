@@ -94,5 +94,24 @@ namespace SerialReaderTests
         }
 
         #endregion
+
+        #region GetMovieFilesFromAllFiles
+
+        [Test]
+        public void ShouldReturnAllFilesFromProvidedList()
+        {
+            // Assign
+            FileFinder fileFinder = new FileFinder();
+            List<string> fileNames = new List<string> { "test.avi" , "test2.mp4", "test3.mkv" };
+
+            // Act
+            var result = fileFinder.GetMovieFilesFromAllFiles(fileNames);
+
+            // Assert
+            Assert.AreEqual(fileNames, result);
+        }
+
+
+        #endregion
     }
 }
