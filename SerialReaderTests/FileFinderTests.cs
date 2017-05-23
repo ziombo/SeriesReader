@@ -15,6 +15,7 @@ namespace SerialReaderTests
         #region SelectDirectory Tests
 
         [Test]
+        [Category("SelectDirectory")]
         public void SelectDirectoryReturnProperPath()
         {
             // Arrange
@@ -31,6 +32,7 @@ namespace SerialReaderTests
         }
 
         [Test]
+        [Category("SelectDirectory")]
         public void SelectDirectoryThrowsExceptionPathIsEmpty()
         {
             // Arrange
@@ -44,6 +46,7 @@ namespace SerialReaderTests
         }
 
         [Test]
+        [Category("SelectDirectory")]
         public void SelectDirectoryThrowsExceptionPathIsNotPath()
         {
             // Arrange
@@ -61,6 +64,7 @@ namespace SerialReaderTests
         #region GetFileNames Tests
 
         [Test]
+        [Category("GetFileNames")]
         public void GetFileNamesShouldReturn3FileNames()
         {
             // Assign
@@ -78,6 +82,7 @@ namespace SerialReaderTests
         }
 
         [Test]
+        [Category("GetFileNames")]
         public void GetFileNamesShouldReturn0FileNames()
         {
             // Assign
@@ -98,6 +103,7 @@ namespace SerialReaderTests
         #region GetMovieFilesFromAllFiles
 
         [Test]
+        [Category("GetMovieFilesFromAllFiles")]
         public void ShouldReturnAllFilesFromProvidedList()
         {
             // Assign
@@ -105,13 +111,42 @@ namespace SerialReaderTests
             List<string> fileNames = new List<string> { "test.avi" , "test2.mp4", "test3.mkv" };
 
             // Act
-            var result = fileFinder.GetMovieFilesFromAllFiles(fileNames);
+            List<string> result = fileFinder.GetMovieFilesFromAllFiles(fileNames);
 
             // Assert
             Assert.AreEqual(fileNames, result);
         }
 
+        [Test]
+        [Category("GetMovieFilesFromAllFiles")]
+        public void ShouldReturnNoFilesFromProvidedList()
+        {
+            // Assign
+            FileFinder fileFinder = new FileFinder();
+            List<string> fileNames = new List<string> { "qwerty", "asdfg.mp3", "foobar.jfcmsb" };
 
+            // Act
+            List<string> result = fileFinder.GetMovieFilesFromAllFiles(fileNames);
+
+            // Assert
+            Assert.IsEmpty(result);
+        }
+
+        [Test]
+        [Category("GetMovieFilesFromAllFiles")]
+        public void ShouldReturnOneFileFromProvidedList()
+        {
+            // Assign
+            FileFinder fileFinder = new FileFinder();
+            List<string> fileNames = new List<string> { "tetris", "mario.mkv", "at.avi.ena" };
+
+            // Act
+            List<string> result = fileFinder.GetMovieFilesFromAllFiles(fileNames);
+
+            // Assert
+            Assert.AreEqual(1, result.Count);
+            Assert.Contains("mario.mkv", result);
+        }
         #endregion
     }
 }

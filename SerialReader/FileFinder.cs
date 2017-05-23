@@ -44,7 +44,7 @@ namespace SerialReader
 
             // Select fileNames that contain one of the extensions
             return fileNames.Where(fn => 
-                movieExtensions.Any(me => fn.Contains(me))
+                movieExtensions.Any(me => Path.GetExtension(fn).Contains(me))
                 ).ToList();
 
         }
