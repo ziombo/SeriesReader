@@ -42,11 +42,11 @@ namespace SerialReader
         {
             List<string> movieExtensions = new List<string>{ "avi", "mp4", "mkv" };
 
-            // Select fileNames that contain one of the extensions
+            // Select fileNames that contain one of the extensions. 
+            // Check only extension of each file.
             return fileNames.Where(fn => 
                 movieExtensions.Any(me => Path.GetExtension(fn).Contains(me))
                 ).ToList();
-
         }
 
         // Consider: separate class | Extract series names from filenames | Consider: alrdy distinct them?
