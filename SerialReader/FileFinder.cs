@@ -28,7 +28,7 @@ namespace SerialReader
             {
                 return getFilesFromDir.GetFiles();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new InvalidOperationException(ex.Message);
             }
@@ -40,17 +40,33 @@ namespace SerialReader
         // 2) return files that are movies (extension) 
         public List<string> GetMovieFilesFromAllFiles(List<string> fileNames)
         {
-            List<string> movieExtensions = new List<string>{ "avi", "mp4", "mkv" };
+            List<string> movieExtensions = new List<string> { "avi", "mp4", "mkv" };
 
             // Select fileNames that contain one of the extensions. 
             // Check only extension of each file.
-            return fileNames.Where(fn => 
+            return fileNames.Where(fn =>
                 movieExtensions.Any(me => Path.GetExtension(fn).Contains(me))
                 ).ToList();
         }
 
         // Consider: separate class | Extract series names from filenames | Consider: alrdy distinct them?
+        // Regex: \.[S]\d{2}
+        public List<string> ExtractSeriesFromFileNames(List<string> fileNames)
+        {
+            List<string> seriesNames = new List<string>();
 
+            string pattern = @".+?(?=\.[S]\d{2})";
+            RegexOptions options = RegexOptions.IgnoreCase;
 
+            foreach (string fileName in fileNames)
+            {
+                Match match = Regex.Match(fileName, pattern, options);
+                if (match.Success)
+                {
+                    seriesNames.Add(match.Value);
+                }
+            }
+            return seriesNames;
+        }
     }
 }

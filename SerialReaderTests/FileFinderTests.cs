@@ -100,7 +100,7 @@ namespace SerialReaderTests
 
         #endregion
 
-        #region GetMovieFilesFromAllFiles
+        #region GetMovieFilesFromAllFiles Tests
 
         [Test]
         [Category("GetMovieFilesFromAllFiles")]
@@ -147,6 +147,27 @@ namespace SerialReaderTests
             Assert.AreEqual(1, result.Count);
             Assert.Contains("mario.mkv", result);
         }
+        #endregion tests
+
+        #region ExtractSeriesFromFileNames Tests
+
+        [Test]
+        [Category("ExtractSeriesFromFileNames")]
+        public void ShouldReturnTwoElementsInList()
+        {
+            // Assign
+            FileFinder fileFinder = new FileFinder();
+            List<string> fileNames = new List<string> { "mamba.S02", "bamba" };
+
+            // Act
+            List<string> result = fileFinder.ExtractSeriesFromFileNames(fileNames);
+
+            // Assert
+            Assert.That(result.Contains("mamba"));
+            Assert.That(!result.Contains("bamba"));
+        }
+
+
         #endregion
     }
 }
