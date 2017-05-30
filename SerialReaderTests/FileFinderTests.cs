@@ -153,7 +153,7 @@ namespace SerialReaderTests
 
         [Test]
         [Category("ExtractSeriesFromFileNames")]
-        public void ShouldReturnTwoElementsInList()
+        public void ShouldReturnOneElementInList()
         {
             // Assign
             FileFinder fileFinder = new FileFinder();
