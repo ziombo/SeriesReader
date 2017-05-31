@@ -49,17 +49,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileFinder.cs" />
-    <Compile Include="FolderBrowser.cs" />
+    <Compile Include="FindFilesClasses\FileFinder.cs" />
+    <Compile Include="FindFilesClasses\FolderBrowser.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="GetFilesFromDir.cs" />
-    <Compile Include="IFolderBrowserDialogWrapper.cs" />
-    <Compile Include="IGetFilesFromDir.cs" />
+    <Compile Include="FindFilesClasses\GetFilesFromDir.cs" />
+    <Compile Include="FindFilesClasses\IFolderBrowserDialogWrapper.cs" />
+    <Compile Include="FindFilesClasses\IGetFilesFromDir.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -86,6 +86,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FindSeriesClasses\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
