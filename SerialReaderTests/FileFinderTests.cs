@@ -167,6 +167,35 @@ namespace SerialReaderTests
             Assert.That(!result.Contains("bamba"));
         }
 
+        [Test]
+        [Category("ExtractSeriesFromFileNames")]
+        public void ShouldReturnEmptyList()
+        {
+            // Assign
+            FileFinder fileFinder = new FileFinder();
+            List<string> fileNames = new List<string> { "testS02", "S02", ".S02" };
+
+            // Act
+            List<string> result = fileFinder.ExtractSeriesFromFileNames(fileNames);
+
+            // Assert
+            Assert.IsEmpty(result);
+        }
+
+        [Test]
+        [Category("ExtractSeriesFromFileNames")]
+        public void ShouldReturnEmptyListFromEmptyList()
+        {
+            // Assign
+            FileFinder fileFinder = new FileFinder();
+            List<string> fileNames = new List<string>();
+
+            // Act
+            List<string> result = fileFinder.ExtractSeriesFromFileNames(fileNames);
+
+            // Assert
+            Assert.IsEmpty(result);
+        }
 
         #endregion
     }

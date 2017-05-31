@@ -49,8 +49,7 @@ namespace SerialReader
                 ).ToList();
         }
 
-        // Consider: separate class | Extract series names from filenames | Consider: alrdy distinct them?
-        // Regex: \.[S]\d{2}
+        // Extract series names from filenames | Consider: alrdy distinct them?
         public List<string> ExtractSeriesFromFileNames(List<string> fileNames)
         {
             List<string> seriesNames = new List<string>();
@@ -66,7 +65,7 @@ namespace SerialReader
                     seriesNames.Add(match.Value);
                 }
             }
-            return seriesNames;
+            return seriesNames.Distinct().ToList();
         }
     }
 }
