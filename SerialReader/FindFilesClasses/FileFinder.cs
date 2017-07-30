@@ -49,17 +49,19 @@ namespace SerialReader
                 ).ToList();
         }
 
-        // Extract series names from filenames | Consider: alrdy distinct them?
+        // Extract series names from filenames
         public List<string> ExtractSeriesFromFileNames(List<string> fileNames)
         {
             List<string> seriesNames = new List<string>();
 
-            string pattern = @".+?(?=\.[S]\d{2})";
-            RegexOptions options = RegexOptions.IgnoreCase;
+            const string pattern = @".+?(?=\.[S]\d{2})";
+            const RegexOptions options = RegexOptions.IgnoreCase;
+
+            Regex _regex = new Regex(pattern, options);
 
             foreach (string fileName in fileNames)
             {
-                Match match = Regex.Match(fileName, pattern, options);
+                Match match = _regex.Match(fileName);
                 if (match.Success)
                 {
                     seriesNames.Add(match.Value);
