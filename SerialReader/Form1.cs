@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SerialReader.WebConnector;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,8 +23,12 @@ namespace SerialReader
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
+            var t = new SeriesDownloader(new HttpHandler());
+            var x = await t.GetSeriesData("ray donovan");
+            var y = await t.ConvertSeriesData(x);
+            t.ExtractSeriesInfo(y);
         }
     }
 }

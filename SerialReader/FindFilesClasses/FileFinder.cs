@@ -32,7 +32,6 @@ namespace SerialReader
             {
                 throw new InvalidOperationException(ex.Message);
             }
-
         }
 
         // Get filenames [optional: already sort for movie files. consider]
