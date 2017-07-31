@@ -19,7 +19,7 @@ namespace SerialReader.WebConnector.ResourceClasses
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new NotImplementedException("Not going to use this to write");
+            throw new InvalidOperationException("Not going to use this to write");
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -28,6 +28,13 @@ namespace SerialReader.WebConnector.ResourceClasses
             {
                 JObject item = JObject.Load(reader);
 
+                // If airdate is present it means it's checking the nextEpLink already
+                // So instead of writting another converter I'm putting it here
+                if(item["airdate"] != null)
+                {
+                    return item["airdate"].Value<string>();
+                }
+
                 string name = item["name"].Value<string>();
                 string status = item["status"].Value<string>();
                 string nextEpisodeLink = "";
@@ -35,7 +42,7 @@ namespace SerialReader.WebConnector.ResourceClasses
 
                 if (item["_links"]["nextepisode"] != null)
                 {
-                    nextEpisodeLink = item["_links"]["nextepisode"]["href"].ToString();
+                    nextEpisodeLink = item["_links"]["nextepisode"]["href"].Value<string>();
                 }
 
                 return new SeriesGeneral(name, status, nextEpisodeLink);
@@ -43,15 +50,13 @@ namespace SerialReader.WebConnector.ResourceClasses
             // IDK what's this about.
             else
             {
-                JArray array = JArray.Load(reader);
-
-                return array.ToString();
+                throw new InvalidOperationException("Error in SeriesGeneralJsonConverter. Finally happenned");
             }
         }
 
-        public override bool CanRead
+        public override bool CanWrite
         {
-            get { return true; }
+            get { return false; }
         }
 
         public override bool CanConvert(Type objectType)

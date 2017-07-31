@@ -23,7 +23,7 @@ namespace SerialReader.WebConnector
         }
 
         // Ściągnij JSON z api dla danego serialu
-        // Wyciągnij informacje nt tego serialu (poprawna nazwa, status, następny odcinek)
+
         // Stwórz nowy obiekt (serial) 
 
         public async Task<HttpResponseMessage> GetSeriesData(string seriesName)
@@ -32,22 +32,26 @@ namespace SerialReader.WebConnector
 
             return await _httpHandler.GetAsync(seriesUrl);
         }
-
-        public async Task<Dictionary<String, Object>> ConvertSeriesData(HttpResponseMessage seriesData)
+        // Wyciągnij informacje nt tego serialu (poprawna nazwa, status, link do następnego odcinka)
+        public async Task<SeriesGeneral> ConvertSeriesData(HttpResponseMessage seriesData)
         {
             string seriesDataParsed = await seriesData.Content.ReadAsStringAsync();
-
-            SeriesGeneral sg = JsonConvert.DeserializeObject<SeriesGeneral>(seriesDataParsed, new SeriesGeneralJsonConverter(typeof(SeriesGeneral)));
-
-            return JsonConvert.DeserializeObject<Dictionary<String, Object>>(seriesDataParsed);
+            return JsonConvert.DeserializeObject<SeriesGeneral>
+                        (seriesDataParsed, new SeriesGeneralJsonConverter(typeof(SeriesGeneral)));
         }
 
-        // Tutaj stowrzyć odpowiednie klasy żeby mapować od razu te wartości. ew w metodzie wyżej.s
-        public void ExtractSeriesInfo(Dictionary<String, Object> seriesData)
+        // Ponownie wykonaj zapytanie, link do next episode
+        // Wyciągnij nextEpisodeDate (airdate)
+        public async Task<HttpResponseMessage> GetNextEpisodeDate(string nextEpLink)
         {
-            string name = seriesData["name"].ToString();
-            string status = seriesData["status"].ToString();
+            return await _httpHandler.GetAsync(nextEpLink);
         }
 
+        public async Task<string> AssignNextEpDate(HttpResponseMessage nextEpData)
+        {
+            string nextEpDataParsed = await nextEpData.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<String>
+                        (nextEpDataParsed, new SeriesGeneralJsonConverter(typeof(String)));
+        }
     }
 }

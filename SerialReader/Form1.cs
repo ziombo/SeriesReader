@@ -28,7 +28,9 @@ namespace SerialReader
             var t = new SeriesDownloader(new HttpHandler());
             var x = await t.GetSeriesData("ray donovan");
             var y = await t.ConvertSeriesData(x);
-            t.ExtractSeriesInfo(y);
+
+            var z = await t.GetNextEpisodeDate(y.NextEpLink);
+            var k = await t.AssignNextEpDate(z);
         }
     }
 }

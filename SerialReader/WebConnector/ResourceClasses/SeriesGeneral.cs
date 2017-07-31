@@ -12,12 +12,14 @@ namespace SerialReader.WebConnector.ResourceClasses
         private string name;
         private string status;
         private string nextEpLink;
+        private string nextEpDate;
 
         public string Name { get => name; set => name = value; }
         public string Status { get => status; set => status = value; }
-        internal dynamic NextEpLink { get => nextEpLink; set => nextEpLink = value; }
+        public string NextEpLink { get => nextEpLink; set => nextEpLink = value; }
+        public string NextEpDate { get => nextEpDate; set => nextEpDate = value; }
 
-        public SeriesGeneral(string name, string status, string link)
+        public SeriesGeneral(string name = "", string status = "", string link = "")
         {
             Name = name;
             Status = status;
