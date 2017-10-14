@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace SerialReader.WebConnector
+namespace SerialReaderLibrary.Utils.WebConnector
 {
     public class HttpHandler : IHttpHandler
     {

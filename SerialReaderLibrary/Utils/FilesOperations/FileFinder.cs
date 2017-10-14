@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace SerialReader
+namespace SerialReaderLibrary.Utils.FilesOperations
 {
     public class FileFinder
     {
@@ -56,11 +53,11 @@ namespace SerialReader
             const string pattern = @".+?(?=\.[S]\d{2})";
             const RegexOptions options = RegexOptions.IgnoreCase;
 
-            Regex _regex = new Regex(pattern, options);
+            Regex regex = new Regex(pattern, options);
 
             foreach (string fileName in fileNames)
             {
-                Match match = _regex.Match(fileName);
+                Match match = regex.Match(fileName);
                 if (match.Success)
                 {
                     seriesNames.Add(match.Value);

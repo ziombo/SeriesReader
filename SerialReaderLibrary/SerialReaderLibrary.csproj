@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2FC49739-4551-4D70-83E1-03C9C976941A}</ProjectGuid>
+    <ProjectGuid>{215058C6-6607-485B-BC99-11C5BF6748AA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SerialReaderTests</RootNamespace>
-    <AssemblyName>SerialReaderTests</AssemblyName>
+    <RootNamespace>SerialReaderLibrary</RootNamespace>
+    <AssemblyName>SerialReaderLibrary</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,17 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Castle.Core.4.0.0\lib\net45\Castle.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Moq, Version=4.7.10.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\packages\Moq.4.7.10\lib\net45\Moq.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="nunit.framework, Version=3.6.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.6.1\lib\net45\nunit.framework.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,31 +43,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileFinderTests.cs" />
+    <Compile Include="Utils\FilesOperations\FileFinder.cs" />
+    <Compile Include="Utils\FilesOperations\GetFilesFromDir.cs" />
+    <Compile Include="Utils\FilesOperations\IFolderBrowserDialogWrapper.cs" />
+    <Compile Include="Utils\FilesOperations\IGetFilesFromDir.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\WebConnector\HttpHandler.cs" />
+    <Compile Include="Utils\WebConnector\IHttpHandler.cs" />
+    <Compile Include="Model\SeriesGeneral.cs" />
+    <Compile Include="Model\SeriesGeneralJsonConverter.cs" />
+    <Compile Include="Utils\WebConnector\SeriesDownloader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SerialReaderLibrary\SerialReaderLibrary.csproj">
-      <Project>{215058C6-6607-485B-BC99-11C5BF6748AA}</Project>
-      <Name>SerialReaderLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SerialReader\SerialReader.csproj">
-      <Project>{dedda313-bea6-4905-b491-4f683c8f80be}</Project>
-      <Name>SerialReader</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

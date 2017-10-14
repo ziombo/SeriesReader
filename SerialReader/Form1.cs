@@ -1,13 +1,6 @@
-﻿using SerialReader.WebConnector;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
+using SerialReaderLibrary.Utils.WebConnector;
 
 namespace SerialReader
 {
@@ -25,12 +18,33 @@ namespace SerialReader
 
         private async void button1_Click(object sender, EventArgs e)
         {
+            label1.Text = "";
             var t = new SeriesDownloader(new HttpHandler());
-            var x = await t.GetSeriesData("ray donovan");
-            var y = await t.ConvertSeriesData(x);
 
-            var z = await t.GetNextEpisodeDate(y.NextEpLink);
-            var k = await t.AssignNextEpDate(z);
+
+            //var x = await t.GetSeriesDataAsync("ray donovan");
+            //var y = await t.ConvertSeriesData(x);
+
+            //var z = await t.GetNextEpisodeDate(y.NextEpLink);
+            //var k = await t.AssignNextEpDate(z);
+            //label1.Text = k;
+
+
+            var alfa = await t.GetSeries("ray donovan");
+
+ 
+            label1.Text = alfa.NextEpDate;
+
+
+            ////new SeriesDownloader => GetSeriesDataAsync(seriesName) return HttpResponseMessage =>
+            ////  ConvertSeriesData(HttpResponseMessage) return SeriesGeneral =>
+            ////  GetNextEpisodeDate(linkToNextEpisode) return HttpResponseMessage =>
+            ////  AssignNextEpDate(HttpResponseMessage)
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            label2.Text = new Random().Next(100, 1000).ToString();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace SerialReader.WebConnector
+namespace SerialReaderLibrary.Utils.WebConnector
 {
     public interface IHttpHandler
     {
