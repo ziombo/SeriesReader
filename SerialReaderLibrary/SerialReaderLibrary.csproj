@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ErrorHandling\DownloadSeriesException.cs" />
     <Compile Include="Utils\FilesOperations\FileFinder.cs" />
     <Compile Include="Utils\FilesOperations\GetFilesFromDir.cs" />
     <Compile Include="Utils\FilesOperations\IFolderBrowserDialogWrapper.cs" />

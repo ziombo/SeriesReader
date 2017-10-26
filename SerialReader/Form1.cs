@@ -25,12 +25,12 @@ namespace SerialReader
             //var x = await t.GetSeriesDataAsync("ray donovan");
             //var y = await t.ConvertSeriesData(x);
 
-            //var z = await t.GetNextEpisodeDate(y.NextEpLink);
+            //var z = await t.GetNextEpisodeDateAsync(y.NextEpLink);
             //var k = await t.AssignNextEpDate(z);
             //label1.Text = k;
 
 
-            var alfa = await t.GetSeries("ray donovan");
+            var alfa = await t.GetSeriesAsync(textBox1.Text);
 
  
             label1.Text = alfa.NextEpDate;
@@ -38,7 +38,7 @@ namespace SerialReader
 
             ////new SeriesDownloader => GetSeriesDataAsync(seriesName) return HttpResponseMessage =>
             ////  ConvertSeriesData(HttpResponseMessage) return SeriesGeneral =>
-            ////  GetNextEpisodeDate(linkToNextEpisode) return HttpResponseMessage =>
+            ////  GetNextEpisodeDateAsync(linkToNextEpisode) return HttpResponseMessage =>
             ////  AssignNextEpDate(HttpResponseMessage)
         }
 
