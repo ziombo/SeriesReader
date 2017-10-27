@@ -27,20 +27,23 @@ namespace SerialReaderLibrary.Utils.WebConnector
 
         public async Task<SeriesGeneral> GetSeries(string seriesName)
         {
-            SeriesGeneral series;
             HttpResponseMessage seriesInfo = await GetSeriesDataAsync(seriesName);
 
-
-            if (IsResponseOk(seriesInfo))
-                series = MapSeriesData(seriesInfo);
-            else
-                throw new DownloadSeriesException("Can't download series");
+            SeriesGeneral series = SeriesGeneral(seriesInfo);
 
             if (!String.IsNullOrEmpty(series.NextEpLink))
                series.NextEpDate = await GetNextEpAsync(series.NextEpLink);
 
             return series;
 
+        }
+
+        protected SeriesGeneral SeriesGeneral(HttpResponseMessage seriesInfo)
+        {
+            if (IsResponseOk(seriesInfo))
+                return MapSeriesData(seriesInfo);
+            else
+                throw new DownloadSeriesException("Can't download series");
         }
 
         private SeriesGeneral MapSeriesData(HttpResponseMessage seriesInfo)
