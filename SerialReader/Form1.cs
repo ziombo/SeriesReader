@@ -35,7 +35,7 @@ namespace SerialReader
             try
             {
                 SeriesGeneral alfa = await t.GetSeries(textBox1.Text);
-                label1.Text = String.IsNullOrEmpty(alfa.NextEpDate) ? "couldn't download" : alfa.NextEpDate;
+                label1.Text = String.IsNullOrEmpty(alfa.NextEpDate) ? "Next episode unknown" : alfa.NextEpDate;
             }
             catch (DownloadSeriesException exception)
             {
@@ -46,7 +46,7 @@ namespace SerialReader
 
 
             ////new SeriesDownloader => GetSeriesDataAsync(seriesName) return HttpResponseMessage =>
-            ////  ConvertSeriesData(HttpResponseMessage) return SeriesGeneral =>
+            ////  ConvertSeriesData(HttpResponseMessage) return MapToSeriesGeneral =>
             ////  GetNextEpisodeDateAsync(linkToNextEpisode) return HttpResponseMessage =>
             ////  AssignNextEpDate(HttpResponseMessage)
         }

@@ -9,7 +9,7 @@ using SerialReaderLibrary.Model;
 namespace SerialReaderLibrary.Utils.WebConnector
 {
     // new SeriesDownloader => GetSeriesDataAsync(seriesName) return HttpResponseMessage =>
-    //   ConvertSeriesData(HttpResponseMessage) return SeriesGeneral =>
+    //   ConvertSeriesData(HttpResponseMessage) return MapToSeriesGeneral =>
     //   GetNextEpisodeDateAsync(linkToNextEpisode) return HttpResponseMessage =>
     //   AssignNextEpDate(HttpResponseMessage)
 
@@ -29,71 +29,11 @@ namespace SerialReaderLibrary.Utils.WebConnector
         {
             HttpResponseMessage seriesInfo = await GetSeriesDataAsync(seriesName);
 
-            SeriesGeneral series = SeriesGeneral(seriesInfo);
+            SeriesGeneral series = MapToSeriesGeneral(seriesInfo);
 
-            if (!String.IsNullOrEmpty(series.NextEpLink))
-               series.NextEpDate = await GetNextEpAsync(series.NextEpLink);
+            series.NextEpDate = await GetSeriesNextEpDate(series.NextEpLink);
 
             return series;
-
-        }
-
-        protected SeriesGeneral SeriesGeneral(HttpResponseMessage seriesInfo)
-        {
-            if (IsResponseOk(seriesInfo))
-                return MapSeriesData(seriesInfo);
-            else
-                throw new DownloadSeriesException("Can't download series");
-        }
-
-        private SeriesGeneral MapSeriesData(HttpResponseMessage seriesInfo)
-        {
-            string seriesDataParsed = seriesInfo.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<SeriesGeneral>
-                 (seriesDataParsed, new SeriesGeneralJsonConverter(typeof(SeriesGeneral)));;
-        }
-
-        private async Task<string> GetNextEpAsync(string seriesNextEpLink)
-        {
-            HttpResponseMessage nextEpisodeResponse = await GetNextEpDateAsync(seriesNextEpLink);
-            if(IsResponseOk(nextEpisodeResponse))
-                return MapNextEpDate(nextEpisodeResponse);
-            else
-                throw new DownloadSeriesException("Couldn't download next episode date");
-
-        }
-
-        private string MapNextEpDate(HttpResponseMessage nextEpisodeResponse)
-        {
-            string nextEpDataParsed = nextEpisodeResponse.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<string>
-                (nextEpDataParsed, new SeriesGeneralJsonConverter(typeof(string)));
-        }
-
-        private async Task<HttpResponseMessage> GetNextEpDateAsync(string seriesNextEpLink)
-        {
-            return await _httpHandler.GetAsync(seriesNextEpLink);
-        }
-
-        #region BeforeRefactor
-
-        public async Task<SeriesGeneral> GetSeriesAsync(string seriesName)
-        {
-            HttpResponseMessage seriesResponseMessage = await GetSeriesDataAsync(seriesName);
-            if (!IsResponseOk(seriesResponseMessage))
-                return null;
-
-            SeriesGeneral seriesGeneralBase = ConvertSeriesData(seriesResponseMessage);
-            if (seriesGeneralBase.NextEpLink == null)
-                return null;
-
-            HttpResponseMessage nextEpisodeResponseMessage = await GetNextEpisodeDateAsync(seriesGeneralBase.NextEpLink);
-            if (!IsResponseOk(nextEpisodeResponseMessage))
-                return null;
-
-            seriesGeneralBase.NextEpDate = AssignNextEpDate(nextEpisodeResponseMessage);
-
-            return seriesGeneralBase;
         }
 
         // Ściągnij JSON z api dla danego serialu
@@ -102,6 +42,74 @@ namespace SerialReaderLibrary.Utils.WebConnector
             string seriesUrl = ApiUrlBase + seriesName;
             return await _httpHandler.GetAsync(seriesUrl);
         }
+
+
+        private SeriesGeneral MapToSeriesGeneral(HttpResponseMessage seriesInfo)
+        {
+            HttpResponseHelper.ValidateResponse(seriesInfo);
+            return MapSeriesData(seriesInfo);
+        }
+
+        private SeriesGeneral MapSeriesData(HttpResponseMessage seriesInfo)
+        {
+            string seriesDataParsed = seriesInfo.Content.ReadAsStringAsync().Result;
+            return JsonConverter<SeriesGeneral>(seriesDataParsed);
+        }
+
+        private async Task<string> GetSeriesNextEpDate(string nextEpLink)
+        {
+            return !String.IsNullOrEmpty(nextEpLink) ? await GetNextEpAsync(nextEpLink) : null;
+        }
+
+        private async Task<string> GetNextEpAsync(string seriesNextEpLink)
+        {
+            HttpResponseMessage nextEpisodeResponse = await GetNextEpDateAsync(seriesNextEpLink);
+
+            HttpResponseHelper.ValidateResponse(nextEpisodeResponse);
+            return MapNextEpDate(nextEpisodeResponse);
+        }
+
+        private async Task<HttpResponseMessage> GetNextEpDateAsync(string seriesNextEpLink)
+        {
+            return await _httpHandler.GetAsync(seriesNextEpLink);
+        }
+
+        private string MapNextEpDate(HttpResponseMessage nextEpisodeResponse)
+        {
+            string nextEpDataParsed = nextEpisodeResponse.Content.ReadAsStringAsync().Result;
+            return JsonConverter<string>(nextEpDataParsed);
+        }
+
+
+        private T JsonConverter<T>(string json)
+        {
+            return JsonConvert.DeserializeObject<T>
+                (json, new SeriesGeneralJsonConverter(typeof(T)));
+        }
+
+
+
+        #region BeforeRefactor
+
+        public async Task<SeriesGeneral> GetSeriesAsync(string seriesName)
+        {
+            HttpResponseMessage seriesResponseMessage = await GetSeriesDataAsync(seriesName);
+            if (!HttpResponseHelper.IsResponseOk(seriesResponseMessage))
+                return null;
+
+            SeriesGeneral seriesGeneralBase = ConvertSeriesData(seriesResponseMessage);
+            if (seriesGeneralBase.NextEpLink == null)
+                return null;
+
+            HttpResponseMessage nextEpisodeResponseMessage = await GetNextEpisodeDateAsync(seriesGeneralBase.NextEpLink);
+            if (!HttpResponseHelper.IsResponseOk(nextEpisodeResponseMessage))
+                return null;
+
+            seriesGeneralBase.NextEpDate = AssignNextEpDate(nextEpisodeResponseMessage);
+
+            return seriesGeneralBase;
+        }
+
 
         // Wyciągnij informacje nt tego serialu (poprawna nazwa, status, link do następnego odcinka)
         public SeriesGeneral ConvertSeriesData(HttpResponseMessage seriesData)
@@ -127,10 +135,6 @@ namespace SerialReaderLibrary.Utils.WebConnector
 
 #endregion
 
-        private bool IsResponseOk(HttpResponseMessage hrm)
-        {
-            return hrm.StatusCode == HttpStatusCode.OK;
-        }
 
     }
 }
