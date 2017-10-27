@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
+using SerialReaderLibrary.ErrorHandling;
+using SerialReaderLibrary.Model;
 using SerialReaderLibrary.Utils.WebConnector;
 
 namespace SerialReader
@@ -19,7 +21,7 @@ namespace SerialReader
         private async void button1_Click(object sender, EventArgs e)
         {
             label1.Text = "";
-            var t = new SeriesDownloader(new HttpHandler());
+            SeriesDownloader t = new SeriesDownloader(new HttpHandler());
 
 
             //var x = await t.GetSeriesDataAsync("ray donovan");
@@ -30,10 +32,17 @@ namespace SerialReader
             //label1.Text = k;
 
 
-            var alfa = await t.GetSeriesAsync(textBox1.Text);
+            try
+            {
+                SeriesGeneral alfa = await t.GetSeries(textBox1.Text);
+                label1.Text = String.IsNullOrEmpty(alfa.NextEpDate) ? "couldn't download" : alfa.NextEpDate;
+            }
+            catch (DownloadSeriesException exception)
+            {
+                label1.Text = exception.Message;
+            }
 
- 
-            label1.Text = alfa.NextEpDate;
+
 
 
             ////new SeriesDownloader => GetSeriesDataAsync(seriesName) return HttpResponseMessage =>

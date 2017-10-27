@@ -25,32 +25,46 @@ namespace SerialReaderLibrary.Utils.WebConnector
         // jeśli dobre sprawdz czy jest link do następnego -> jeśli jest ściągnij
 
 
-        public async Task<string> GetSeries(string seriesName)
+        public async Task<SeriesGeneral> GetSeries(string seriesName)
         {
+            SeriesGeneral series;
             HttpResponseMessage seriesInfo = await GetSeriesDataAsync(seriesName);
+
+
             if (IsResponseOk(seriesInfo))
-                return MapSeriesData(seriesInfo);
+                series = MapSeriesData(seriesInfo);
             else
                 throw new DownloadSeriesException("Can't download series");
 
+            if (!String.IsNullOrEmpty(series.NextEpLink))
+               series.NextEpDate = await GetNextEpAsync(series.NextEpLink);
+
+            return series;
+
         }
 
-        private string MapSeriesData(HttpResponseMessage seriesInfo)
+        private SeriesGeneral MapSeriesData(HttpResponseMessage seriesInfo)
         {
             string seriesDataParsed = seriesInfo.Content.ReadAsStringAsync().Result;
-            SeriesGeneral series = JsonConvert.DeserializeObject<SeriesGeneral>
-                 (seriesDataParsed, new SeriesGeneralJsonConverter(typeof(SeriesGeneral)));
-
-            if (!String.IsNullOrEmpty(series.NextEpLink))
-                GetNextEp(series.NextEpLink);
-
+            return JsonConvert.DeserializeObject<SeriesGeneral>
+                 (seriesDataParsed, new SeriesGeneralJsonConverter(typeof(SeriesGeneral)));;
         }
 
-        private async Task<string> GetNextEp(string seriesNextEpLink)
+        private async Task<string> GetNextEpAsync(string seriesNextEpLink)
         {
             HttpResponseMessage nextEpisodeResponse = await GetNextEpDateAsync(seriesNextEpLink);
             if(IsResponseOk(nextEpisodeResponse))
-                
+                return MapNextEpDate(nextEpisodeResponse);
+            else
+                throw new DownloadSeriesException("Couldn't download next episode date");
+
+        }
+
+        private string MapNextEpDate(HttpResponseMessage nextEpisodeResponse)
+        {
+            string nextEpDataParsed = nextEpisodeResponse.Content.ReadAsStringAsync().Result;
+            return JsonConvert.DeserializeObject<string>
+                (nextEpDataParsed, new SeriesGeneralJsonConverter(typeof(string)));
         }
 
         private async Task<HttpResponseMessage> GetNextEpDateAsync(string seriesNextEpLink)
