@@ -2,10 +2,11 @@
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SerialReaderLibrary.Model;
 
-namespace SerialReaderLibrary.Model
+namespace SerialReaderLibrary.Utils.Series
 {
-    public class SeriesGeneralJsonConverter : JsonConverter
+    public class SeriesGeneralJsonConverter : Newtonsoft.Json.JsonConverter
     {
         private readonly Type[] _types;
 
