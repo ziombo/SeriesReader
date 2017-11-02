@@ -17,7 +17,19 @@ namespace SerialReaderLibrary.Utils.Series.Downloader
         public SeriesDownloader(IHttpHandler httpHandler) => _httpHandler = httpHandler ?? throw new ArgumentNullException(nameof(httpHandler));
 
 
-        public async Task<SeriesGeneral> GetSeries(string seriesName)
+
+        public SeriesGeneral GetSeries(string seriesName)
+        {
+            HttpResponseMessage seriesInfo = GetSeriesDataAsync(seriesName).Result;
+
+            SeriesGeneral series = SeriesMapper.MapToSeriesGeneral(seriesInfo);
+
+            series.NextEpisodeDate = GetSeriesNextEpDate(series.NextEpisodeLink).Result;
+
+            return series;
+        }
+
+        public async Task<SeriesGeneral> GetSeriesAsync(string seriesName)
         {
             HttpResponseMessage seriesInfo = await GetSeriesDataAsync(seriesName);
 

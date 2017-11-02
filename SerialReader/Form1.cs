@@ -26,7 +26,7 @@ namespace SerialReader
 
             try
             {
-                SeriesGeneral alfa = await seriesDownloader.GetSeries(textBox1.Text);
+                SeriesGeneral alfa = await seriesDownloader.GetSeriesAsync(textBox1.Text);
                 label1.Text = String.IsNullOrEmpty(alfa.NextEpisodeDate) ? "Next episode unknown" : alfa.NextEpisodeDate;
             }
             catch (DownloadSeriesException exception)
