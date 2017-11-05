@@ -12,8 +12,9 @@ namespace SerialReaderConsole
     {
         static void Main(string[] args)
         {
-            // dodać event do SeriesReader żeby rzucało event jak błąd i wtedy na czilku się dopisujesz elo
-
+            // TODO: dodać event do SeriesReader żeby rzucało event jak błąd i wtedy na czilku się dopisujesz elo
+            // TODO: zapisywanie kolekcji do pliku (na exit chyba najlepiej)
+            // TODO: czytanie z pliku i tworzenie kolekcji na starcie
             ConsoleInteraction.DisplayConsoleMenu();
         }
     }
