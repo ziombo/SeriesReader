@@ -7,15 +7,15 @@ namespace SerialReaderLibrary.Utils.Files
 {
     public class GetFilesFromDir : IGetFilesFromDir
     {
-        private readonly string path;
-        public GetFilesFromDir(string _path)
+        private readonly string _path;
+        public GetFilesFromDir(string path)
         {
-            path = _path;
+            this._path = path;
         }
 
         public List<string> GetFiles()
         {
-            return Directory.GetFiles(path).ToList();
+            return Directory.GetFiles(_path).ToList();
         }
     }
 }
