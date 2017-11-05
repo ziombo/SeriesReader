@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using SerialReaderLibrary.Utils.Files.Interfaces;
 
-namespace SerialReaderLibrary.Utils.FilesOperations
+namespace SerialReaderLibrary.Utils.Files
 {
     public class FileFinder
     {
@@ -50,19 +51,24 @@ namespace SerialReaderLibrary.Utils.FilesOperations
         {
             List<string> seriesNames = new List<string>();
 
+
+            // pattern - name.S03  takes the "name" part
             const string pattern = @".+?(?=\.[S]\d{2})";
             const RegexOptions options = RegexOptions.IgnoreCase;
+            Regex regex = new Regex(pattern, options);;
 
-            Regex regex = new Regex(pattern, options);
+            // such ForEach is faster than normal foreach(var x in y)
+            // https://stackoverflow.com/a/5834005/5859562
 
-            foreach (string fileName in fileNames)
+            fileNames.ForEach(fileName =>
             {
-                Match match = regex.Match(fileName);
-                if (match.Success)
+                Match match = regex.Match((fileName));
+                if(match.Success)
                 {
                     seriesNames.Add(match.Value);
                 }
-            }
+            });
+
             return seriesNames.Distinct().ToList();
         }
     }

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using Moq;
 using SerialReaderLibrary;
-using SerialReaderLibrary.Utils.FilesOperations;
+using SerialReaderLibrary.Utils.Files;
+using SerialReaderLibrary.Utils.Files.Interfaces;
 
 namespace SerialReaderTests
 {

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using SerialReaderLibrary.Utils.Files.Interfaces;
 
-namespace SerialReaderLibrary.Utils.FilesOperations
+namespace SerialReaderLibrary.Utils.Files
 {
     public class GetFilesFromDir : IGetFilesFromDir
     {

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SerialReaderLibrary.Model;
 
-namespace SerialReaderLibrary.Utils.Series
+namespace SerialReaderLibrary.Utils.Series.Mapper
 {
     public class SeriesGeneralJsonConverter : Newtonsoft.Json.JsonConverter
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SerialReaderLibrary.Utils.FilesOperations
+namespace SerialReaderLibrary.Utils.Files.Interfaces
 {
     public interface IGetFilesFromDir
     {

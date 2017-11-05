@@ -1,4 +1,4 @@
-﻿namespace SerialReaderLibrary.Utils.FilesOperations
+﻿namespace SerialReaderLibrary.Utils.Files.Interfaces
 {
     public interface IFolderBrowserDialogWrapper
     {

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SerialReaderLibrary.Model;
-using SerialReaderLibrary.Utils.FilesOperations;
+using SerialReaderLibrary.Utils.Files;
 using SerialReaderLibrary.Utils.Series.Downloader;
 
 namespace SerialReaderConsole
@@ -13,9 +13,9 @@ namespace SerialReaderConsole
         {
             // dodać event do SeriesReader żeby rzucało event jak błąd i wtedy na czilku się dopisujesz elo
 
-            var xz = new FileSaver();
+            var xz = new FileOperations();
             var test = xz.ReadFromAppData();
-            var test2 = JsonConvert.DeserializeObject<SeriesGeneral>(test); // nie działa bo name i Name. Jutro: zrobić custom object->json converter
+            var test2 = JsonConvert.DeserializeObject<SeriesGeneral>(test);
             SeriesFinder();
         }
 
@@ -38,10 +38,10 @@ namespace SerialReaderConsole
                 switch (command)
                 {
                     case "1":
-                        GetSeriesNameFromUser();
+                        ConsoleSeriesHandler.GetSeriesForConsole();
                         break;
                     case "2":
-                        DisplaySeriesCollection();
+                        ConsoleSeriesHandler.DisplaySeriesCollection();
                         break;
                     case "3":
                         break;
@@ -52,45 +52,17 @@ namespace SerialReaderConsole
             }
         }
 
-        private static void DisplaySeriesCollection()
+        private static void WriteToConsoleColoured(ConsoleColor color, string message, bool writeLine = false)
         {
-            throw new NotImplementedException();
-        }
+            ConsoleColor currentColorHolder = Console.ForegroundColor;
+            Console.ForegroundColor = color;
+            
+            if(writeLine)
+                Console.WriteLine(message);
+            else
+                Console.Write(message);
 
-        private static void GetSeriesNameFromUser()
-        {
-            Console.Write("Input series name: ");
-            string seriesName = Console.ReadLine();
-
-            SeriesDownloader seriesDownloader = new SeriesDownloader();
-
-            SeriesGeneral y = seriesDownloader.GetSeries(seriesName);
-
-            string unknown = "Unknown";
-
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("Series: ");
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine(y.Name);
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("Status: ");
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine(y.Status);
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("NextEpisode: ");
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine(y.NextEpisodeDate ?? unknown);
-            if (y.NextEpisodeDate != null)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("Days left: ");
-                Console.ForegroundColor = ConsoleColor.Gray;
-                Console.WriteLine(Math.Ceiling((DateTime.Parse(y.NextEpisodeDate) - DateTime.Now).TotalDays));
-            }
-
-            var x = new FileSaver();
-
-            x.SaveToAppData(SerialReaderLibrary.Utils.JsonConverter.ConvertObjectToJson(y));
+            Console.ForegroundColor = currentColorHolder;
         }
     }
 }

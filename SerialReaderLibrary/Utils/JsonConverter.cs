@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SerialReaderLibrary.Model;
 using SerialReaderLibrary.Utils.Series;
+using SerialReaderLibrary.Utils.Series.Mapper;
 
 namespace SerialReaderLibrary.Utils
 {
