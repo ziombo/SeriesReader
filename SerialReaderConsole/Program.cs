@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using SerialReaderLibrary.Model;
 using SerialReaderLibrary.Utils.FilesOperations;
 using SerialReaderLibrary.Utils.Series.Downloader;
@@ -12,6 +13,9 @@ namespace SerialReaderConsole
         {
             // dodać event do SeriesReader żeby rzucało event jak błąd i wtedy na czilku się dopisujesz elo
 
+            var xz = new FileSaver();
+            var test = xz.ReadFromAppData();
+            var test2 = JsonConvert.DeserializeObject<SeriesGeneral>(test); // nie działa bo name i Name. Jutro: zrobić custom object->json converter
             SeriesFinder();
         }
 
@@ -85,7 +89,8 @@ namespace SerialReaderConsole
             }
 
             var x = new FileSaver();
-            x.SaveToAppData("test");
+
+            x.SaveToAppData(SerialReaderLibrary.Utils.JsonConverter.ConvertObjectToJson(y));
         }
     }
 }

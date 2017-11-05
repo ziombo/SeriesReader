@@ -16,5 +16,10 @@ namespace SerialReaderLibrary.Utils
             return JsonConvert.DeserializeObject<T>
                 (json, new SeriesGeneralJsonConverter(typeof(T)));
         }
+
+        public static string ConvertObjectToJson(object data)
+        {
+            return JsonConvert.SerializeObject(data);
+        }
     }
 }

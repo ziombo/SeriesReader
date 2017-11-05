@@ -10,14 +10,23 @@ namespace SerialReaderLibrary.Utils.Series
     {
         private readonly Type[] _types;
 
+        public override bool CanWrite => false;
+
+
         public SeriesGeneralJsonConverter(params Type[] types)
         {
             _types = types;
         }
 
+        public override bool CanConvert(Type objectType)
+        {
+            return _types.Any(t => t == objectType);
+        }
+
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new InvalidOperationException("Not going to use this to write");
+
+            throw new InvalidOperationException("Not going to use this converter to write");
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -33,15 +42,13 @@ namespace SerialReaderLibrary.Utils.Series
                     return item["airdate"].Value<string>();
                 }
 
-                string name = item["name"].Value<string>();
-                string status = item["status"].Value<string>();
+                string name = item["name"]?.Value<string>();
+                string status = item["status"]?.Value<string>();
                 string nextEpisodeLink = "";
 
+                
+                nextEpisodeLink = item["_links"]?["nextepisode"]?["href"]?.Value<string>();
 
-                if (item["_links"]["nextepisode"] != null)
-                {
-                    nextEpisodeLink = item["_links"]["nextepisode"]["href"].Value<string>();
-                }
 
                 return new SeriesGeneral(name, status, nextEpisodeLink);
             }
@@ -50,16 +57,6 @@ namespace SerialReaderLibrary.Utils.Series
             {
                 throw new InvalidOperationException("Error in SeriesGeneralJsonConverter. Finally happenned");
             }
-        }
-
-        public override bool CanWrite
-        {
-            get => false;
-        }
-
-        public override bool CanConvert(Type objectType)
-        {
-            return _types.Any(t => t == objectType);
         }
     }
 }
