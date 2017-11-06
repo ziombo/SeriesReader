@@ -18,40 +18,40 @@ namespace SerialReaderLibrary.Utils.Series.Downloader
 
 
 
-        public SeriesGeneral GetSeries(string seriesName)
-        {
-            HttpResponseMessage seriesInfo = GetSeriesDataAsync(seriesName).Result;
+        //public SeriesGeneral GetSeries(string seriesName)
+        //{
+        //    HttpResponseMessage seriesInfo = GetSeriesDataAsync(seriesName).Result;
 
-            SeriesGeneral series = SeriesMapper.MapToSeriesGeneral(seriesInfo);
+        //    SeriesGeneral series = SeriesMapper.MapToSeriesGeneral(seriesInfo);
 
-            series.NextEpisodeDate = GetSeriesNextEpDate(series.NextEpisodeLink).Result;
+        //    series.NextEpisodeDate = GetSeriesNextEpDate(series.NextEpisodeLink).Result;
 
-            return series;
-        }
+        //    return series;
+        //}
 
-        public async Task<SeriesGeneral> GetSeriesAsync(string seriesName)
-        {
-            HttpResponseMessage seriesInfo = await GetSeriesDataAsync(seriesName);
+        //public async Task<SeriesGeneral> GetSeriesAsync(string seriesName)
+        //{
+        //    HttpResponseMessage seriesInfo = await GetSeriesDataAsync(seriesName);
 
-            SeriesGeneral series = SeriesMapper.MapToSeriesGeneral(seriesInfo);
+        //    SeriesGeneral series = SeriesMapper.MapToSeriesGeneral(seriesInfo);
 
-            series.NextEpisodeDate = await GetSeriesNextEpDate(series.NextEpisodeLink);
+        //    series.NextEpisodeDate = await GetSeriesNextEpDate(series.NextEpisodeLink);
 
-            return series;
-        }
+        //    return series;
+        //}
        
-        private async Task<HttpResponseMessage> GetSeriesDataAsync(string seriesName)
+        public async Task<HttpResponseMessage> GetSeriesDataAsync(string seriesName)
         {
             string seriesUrl = ApiUrlBase + seriesName;
             return await _httpHandler.GetAsync(seriesUrl);
         }
 
-        private async Task<string> GetSeriesNextEpDate(string nextEpisodeLink)
+        public async Task<string> GetSeriesNextEpDate(string nextEpisodeLink)
         {
             return !String.IsNullOrEmpty(nextEpisodeLink) ? await GetNextEpisodeAsync(nextEpisodeLink) : null;
         }
 
-        private async Task<string> GetNextEpisodeAsync(string seriesNextEpLink)
+        public async Task<string> GetNextEpisodeAsync(string seriesNextEpLink)
         {
             HttpResponseMessage nextEpisodeResponse = await GetNextEpDateAsync(seriesNextEpLink);
 

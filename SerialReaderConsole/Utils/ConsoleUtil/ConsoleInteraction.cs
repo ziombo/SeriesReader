@@ -62,8 +62,8 @@ namespace SerialReaderConsole.Utils.ConsoleUtil
             Console.Clear();
             ConsoleAppearance.WriteToEndOfConsoleLine('═');
 
-            ConsoleSeriesHandler.GetSeriesCollection().ForEach(DisplaySeriesDetailsToConsole);
-            ConsoleSeriesHandler.GetSeriesCollection().Add(new SeriesGeneral());
+            ConsoleSeriesHandler.AllSeries.ForEach(DisplaySeriesDetailsToConsole);
+
             ConsoleAppearance.WriteToEndOfConsoleLine('═');
 
             // scroll to top
