@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using SerialReaderLibrary.Model;
+using SerialReaderLibrary.Utils.Files;
 using SerialReaderLibrary.Utils.Series.Collection;
 using SerialReaderLibrary.Utils.Series.Downloader;
 using SerialReaderLibrary.Utils.Series.Mapper;
@@ -41,6 +42,8 @@ namespace SerialReaderLibrary.Utils.Series
 
             series.NextEpisodeDate = _seriesDownloader.GetSeriesNextEpDate(series.NextEpisodeLink).Result;
 
+            SeriesCollectionHandler.SeriesCollection.Add(series);
+
             return series;
         }
 
@@ -58,9 +61,40 @@ namespace SerialReaderLibrary.Utils.Series
 
             series.NextEpisodeDate = await _seriesDownloader.GetSeriesNextEpDate(series.NextEpisodeLink);
 
+            SeriesCollectionHandler.SeriesCollection.Add(series);
+
             return series;
         }
 
+        public List<SeriesGeneral> GetLocalSeriesCollection()
+        {
+            return SeriesCollectionHandler.SeriesCollection;
+        }
 //TODO: dodać zapisywanie do kolekcji
+
+        public void SaveCollectionToFile()
+        {
+            string seriesCollectionJson = JsonConverter.ConvertObjectToJson(SeriesCollectionHandler.SeriesCollection);
+            FileOperations.SaveToAppData(seriesCollectionJson);
+        }
+
+        public void LoadCollectionFromFile()
+        {
+            string seriesCollectionJson = FileOperations.ReadFromAppData();
+            try
+            {
+                List<SeriesGeneral> seriesCollection =
+                    (List<SeriesGeneral>) JsonConverter.ConvertJsonToObject(seriesCollectionJson);
+
+                SeriesCollectionHandler.CreateSeriesCollectionFromJson(seriesCollection);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null) throw ex.InnerException;
+                else throw ex;
+
+            }
+
+        }
     }
 }

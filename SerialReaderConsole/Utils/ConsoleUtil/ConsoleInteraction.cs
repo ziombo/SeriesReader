@@ -1,16 +1,19 @@
 ﻿using System;
 using SerialReaderLibrary.Model;
+using SerialReaderLibrary.Utils.Series;
 
 namespace SerialReaderConsole.Utils.ConsoleUtil
 {
     public static class ConsoleInteraction
     {
+        private static readonly SeriesHandler seriesHandler = new SeriesHandler();
+
         public static void DisplayConsoleMenu()
         {
             DisplayMainMenu();
 
             string command = "";
-            while (command != "3")
+            while (command != "4")
             {
                 command = Console.ReadLine();
                 Console.WriteLine();
@@ -23,16 +26,19 @@ namespace SerialReaderConsole.Utils.ConsoleUtil
         {
             switch (command)
             {
+                case "h":
+                    DisplayMainMenu();
+                    break;
                 case "1":
                     FindSeries();
                     break;
                 case "2":
                     DisplaySeriesCollection();
                     break;
-                case "h":
-                    DisplayMainMenu();
-                    break;
                 case "3":
+                    SaveCollectionToFile();
+                    break;
+                case "4":
                     break;
                 default:
                     Console.WriteLine("Invalid command. Pres h for help");
@@ -40,10 +46,15 @@ namespace SerialReaderConsole.Utils.ConsoleUtil
             }
         }
 
+        private static void SaveCollectionToFile()
+        {
+            seriesHandler.SaveCollectionToFile();
+        }
+
         private static void FindSeries()
         {
             string seriesName = GetSeriesNameFromUser();
-            SeriesGeneral series = ConsoleSeriesHandler.GetSeriesForConsole(seriesName);
+            SeriesGeneral series = seriesHandler.GetSeries(seriesName);
             DisplaySeriesDetailsToConsole(series);
 
         }
@@ -53,7 +64,8 @@ namespace SerialReaderConsole.Utils.ConsoleUtil
             Console.WriteLine("Available commands:");
             Console.WriteLine("1) Download series");
             Console.WriteLine("2) Display series collection");
-            Console.WriteLine("3) Exit.");
+            Console.WriteLine("3) Save to file");
+            Console.WriteLine("4) Exit.");
 
         }
 
@@ -62,7 +74,7 @@ namespace SerialReaderConsole.Utils.ConsoleUtil
             Console.Clear();
             ConsoleAppearance.WriteToEndOfConsoleLine('═');
 
-            ConsoleSeriesHandler.AllSeries.ForEach(DisplaySeriesDetailsToConsole);
+            seriesHandler.GetLocalSeriesCollection().ForEach(DisplaySeriesDetailsToConsole);
 
             ConsoleAppearance.WriteToEndOfConsoleLine('═');
 

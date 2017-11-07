@@ -7,9 +7,9 @@ using SerialReaderLibrary.Model;
 
 namespace SerialReaderLibrary.Utils.Series.Collection
 {
-    public static class SeriesCollectionHandler
+    internal static class SeriesCollectionHandler
     {
-        public static List<SeriesGeneral> SeriesCollection { get; } = new List<SeriesGeneral>();
+        public static List<SeriesGeneral> SeriesCollection { get; private set; } = new List<SeriesGeneral>();
 
         public static bool IsSeriesAlreadyStored(string seriesName, ref SeriesGeneral series)
         {
@@ -20,6 +20,11 @@ namespace SerialReaderLibrary.Utils.Series.Collection
         public static void AddSeriesToCollection(SeriesGeneral series)
         {
             SeriesCollection.Add(series);
+        }
+
+        public static void CreateSeriesCollectionFromJson(List<SeriesGeneral> seriesCollection)
+        {
+            SeriesCollection = seriesCollection;
         }
     }
 }
