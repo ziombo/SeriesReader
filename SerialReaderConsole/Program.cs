@@ -14,9 +14,7 @@ namespace SerialReaderConsole
         static void Main(string[] args)
         {
             // TODO: dodać event do SeriesReader żeby rzucało event jak błąd i wtedy na czilku się dopisujesz elo
-            // TODO: Wrapper do obsługi ściągania series (sprawdzanie czy jest lokalnie i pobieranie)
-            // TODO: czytanie z pliku i tworzenie kolekcji na starcie
-            // TODO: Zrzutowanie JSON na kolekcje
+            // TODO: przy starcie porównywać daty z DateTime.Now, jeśli inna to ściągać na nowo
             SeriesHandler seriesHandler = new SeriesHandler();
             seriesHandler.LoadCollectionFromFile();
             
