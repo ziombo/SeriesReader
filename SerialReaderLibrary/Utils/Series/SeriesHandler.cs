@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using SerialReaderLibrary.Model;
 using SerialReaderLibrary.Utils.Files;
 using SerialReaderLibrary.Utils.Series.Collection;
@@ -70,7 +71,6 @@ namespace SerialReaderLibrary.Utils.Series
         {
             return SeriesCollectionHandler.SeriesCollection;
         }
-//TODO: dodać zapisywanie do kolekcji
 
         public void SaveCollectionToFile()
         {
@@ -83,10 +83,17 @@ namespace SerialReaderLibrary.Utils.Series
             string seriesCollectionJson = FileOperations.ReadFromAppData();
             try
             {
-                List<SeriesGeneral> seriesCollection =
-                    (List<SeriesGeneral>) JsonConverter.ConvertJsonToObject(seriesCollectionJson);
+                List<JToken> seriesCollection =
+                    ((JArray)JsonConverter.ConvertJsonToObject(seriesCollectionJson)).ToList();
 
-                SeriesCollectionHandler.CreateSeriesCollectionFromJson(seriesCollection);
+                List<SeriesGeneral> seriesCollectionMapped = new List<SeriesGeneral>();
+
+                foreach (JToken series in seriesCollection)
+                {
+                    seriesCollectionMapped.Add(((JObject)JsonConverter.ConvertJsonToObject(series.ToString())).ToObject<SeriesGeneral>());
+                }
+
+                SeriesCollectionHandler.CreateSeriesCollectionFromJson(seriesCollectionMapped);
             }
             catch (Exception ex)
             {
