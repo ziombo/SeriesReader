@@ -80,28 +80,7 @@ namespace SerialReaderLibrary.Utils.Series
 
         public void LoadCollectionFromFile()
         {
-            string seriesCollectionJson = FileOperations.ReadFromAppData();
-            try
-            {
-                List<JToken> seriesCollection =
-                    ((JArray)JsonConverter.ConvertJsonToObject(seriesCollectionJson)).ToList();
-
-                List<SeriesGeneral> seriesCollectionMapped = new List<SeriesGeneral>();
-
-                foreach (JToken series in seriesCollection)
-                {
-                    seriesCollectionMapped.Add(((JObject)JsonConverter.ConvertJsonToObject(series.ToString())).ToObject<SeriesGeneral>());
-                }
-
-                SeriesCollectionHandler.CreateSeriesCollectionFromJson(seriesCollectionMapped);
-            }
-            catch (Exception ex)
-            {
-                if (ex.InnerException != null) throw ex.InnerException;
-                else throw ex;
-
-            }
-
+            SeriesCollectionHandler.LoadCollectionFromFile();
         }
     }
 }

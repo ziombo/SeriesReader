@@ -6,7 +6,7 @@ namespace SerialReaderConsole.Utils.ConsoleUtil
 {
     public static class ConsoleInteraction
     {
-        private static readonly SeriesHandler seriesHandler = new SeriesHandler();
+        private static readonly SeriesHandler SeriesHandler = new SeriesHandler();
 
         public static void DisplayConsoleMenu()
         {
@@ -48,13 +48,13 @@ namespace SerialReaderConsole.Utils.ConsoleUtil
 
         private static void SaveCollectionToFile()
         {
-            seriesHandler.SaveCollectionToFile();
+            SeriesHandler.SaveCollectionToFile();
         }
 
         private static void FindSeries()
         {
             string seriesName = GetSeriesNameFromUser();
-            SeriesGeneral series = seriesHandler.GetSeries(seriesName);
+            SeriesGeneral series = SeriesHandler.GetSeries(seriesName);
             DisplaySeriesDetailsToConsole(series);
 
         }
@@ -74,7 +74,7 @@ namespace SerialReaderConsole.Utils.ConsoleUtil
             Console.Clear();
             ConsoleAppearance.WriteToEndOfConsoleLine('═');
 
-            seriesHandler.GetLocalSeriesCollection().ForEach(DisplaySeriesDetailsToConsole);
+            SeriesHandler.GetLocalSeriesCollection().ForEach(DisplaySeriesDetailsToConsole);
 
             ConsoleAppearance.WriteToEndOfConsoleLine('═');
 

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using SerialReaderLibrary.Model;
+using SerialReaderLibrary.Utils.Files;
 
 namespace SerialReaderLibrary.Utils.Series.Collection
 {
@@ -22,9 +24,44 @@ namespace SerialReaderLibrary.Utils.Series.Collection
             SeriesCollection.Add(series);
         }
 
-        public static void CreateSeriesCollectionFromJson(List<SeriesGeneral> seriesCollection)
+        private static void CreateSeriesCollectionFromJson(List<SeriesGeneral> seriesCollection)
         {
             SeriesCollection = seriesCollection;
         }
+
+        public static void LoadCollectionFromFile()
+        {
+            string seriesCollectionJson = FileOperations.ReadFromAppData();
+
+            if (String.IsNullOrEmpty(seriesCollectionJson))
+                return;
+
+            LoadJsonIntoCollection(seriesCollectionJson);
+        }
+
+        private static void LoadJsonIntoCollection(string collectionInJson)
+        {
+            try
+            {
+                List<JToken> seriesCollection =
+                    ((JArray)JsonConverter.ConvertJsonToObject(collectionInJson)).ToList();
+
+                List<SeriesGeneral> seriesCollectionMapped = new List<SeriesGeneral>();
+
+                foreach (JToken series in seriesCollection)
+                {
+                    seriesCollectionMapped.Add(((JObject)JsonConverter.ConvertJsonToObject(series.ToString()))
+                        .ToObject<SeriesGeneral>());
+                }
+
+                CreateSeriesCollectionFromJson(seriesCollectionMapped);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null) throw ex.InnerException;
+                else throw ex;
+            }
+        }
+
     }
 }

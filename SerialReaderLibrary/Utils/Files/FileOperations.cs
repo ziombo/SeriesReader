@@ -10,17 +10,17 @@ namespace SerialReaderLibrary.Utils.Files
            Odpalam program -> sprawdzam czy istnieje plik -> jeśli istnieje to go odczytuje
         */
 
-        private static readonly string _location = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) +
+        private static readonly string Location = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) +
                                "/seriesreader.txt";
 
         public static void SaveToAppData(string seriesInJson)
         {
-            File.WriteAllText(_location, seriesInJson);
+            File.WriteAllText(Location, seriesInJson);
         }
 
         public static string ReadFromAppData()
         {
-            return File.ReadAllText(_location);
+            return File.Exists(Location) ? File.ReadAllText(Location) : null;
         }
     }
 }
