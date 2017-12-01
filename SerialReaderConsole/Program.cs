@@ -4,8 +4,7 @@ using Newtonsoft.Json;
 using SerialReaderConsole.Utils.ConsoleUtil;
 using SerialReaderLibrary.Model;
 using SerialReaderLibrary.Utils.Files;
-using SerialReaderLibrary.Utils.Series;
-using SerialReaderLibrary.Utils.Series.Downloader;
+using SerialReaderLibrary.Utils.TvShow;
 
 namespace SerialReaderConsole
 {

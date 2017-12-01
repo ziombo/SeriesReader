@@ -63,10 +63,6 @@
       <Project>{215058C6-6607-485B-BC99-11C5BF6748AA}</Project>
       <Name>SerialReaderLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SerialReader\SerialReader.csproj">
-      <Project>{dedda313-bea6-4905-b491-4f683c8f80be}</Project>
-      <Name>SerialReader</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

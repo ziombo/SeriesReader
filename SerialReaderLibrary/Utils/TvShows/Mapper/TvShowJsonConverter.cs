@@ -4,16 +4,16 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SerialReaderLibrary.Model;
 
-namespace SerialReaderLibrary.Utils.Series.Mapper
+namespace SerialReaderLibrary.Utils.TvShows.Mapper
 {
-    public class SeriesGeneralJsonConverter : Newtonsoft.Json.JsonConverter
+    public class TvShowJsonConverter : Newtonsoft.Json.JsonConverter
     {
         private readonly Type[] _types;
 
         public override bool CanWrite => false;
 
 
-        public SeriesGeneralJsonConverter(params Type[] types)
+        public TvShowJsonConverter(params Type[] types)
         {
             _types = types;
         }
@@ -50,7 +50,7 @@ namespace SerialReaderLibrary.Utils.Series.Mapper
                 nextEpisodeLink = item["_links"]?["nextepisode"]?["href"]?.Value<string>();
 
 
-                return new SeriesGeneral(name, status, nextEpisodeLink);
+                return new TvShow(name, status, nextEpisodeLink);
             }
             // IDK what's this about.
             else

@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SerialReaderLibrary.Model;
-using SerialReaderLibrary.Utils.Series;
-using SerialReaderLibrary.Utils.Series.Mapper;
+using SerialReaderLibrary.Utils.TvShows.Mapper;
 
 namespace SerialReaderLibrary.Utils
 {
@@ -15,7 +14,7 @@ namespace SerialReaderLibrary.Utils
         public static T ConvertJsonToObject<T>(string json)
         {
             return JsonConvert.DeserializeObject<T>
-                (json, new SeriesGeneralJsonConverter(typeof(T)));
+                (json, new TvShowJsonConverter(typeof(T)));
         }
 
         public static object ConvertJsonToObject(string json)

@@ -1,30 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using SerialReaderLibrary.Model;
 using SerialReaderLibrary.Utils.Files;
 
-namespace SerialReaderLibrary.Utils.Series.Collection
+namespace SerialReaderLibrary.Utils.TvShows.Collection
 {
-    internal static class SeriesCollectionHandler
+    internal static class TvShowCollectionHandler
     {
-        public static List<SeriesGeneral> SeriesCollection { get; private set; } = new List<SeriesGeneral>();
+        public static List<TvShow> SeriesCollection { get; private set; } = new List<TvShow>();
 
-        public static bool IsSeriesAlreadyStored(string seriesName, ref SeriesGeneral series)
+        public static bool IsSeriesAlreadyStored(string seriesName, ref TvShow series)
         {
             series = SeriesCollection.FirstOrDefault(s => s.Name.ToLower() == seriesName.ToLower());
             return series != null;
         }
 
-        public static void AddSeriesToCollection(SeriesGeneral series)
+        public static void AddSeriesToCollection(TvShow series)
         {
             SeriesCollection.Add(series);
         }
 
-        private static void CreateSeriesCollectionFromJson(List<SeriesGeneral> seriesCollection)
+        private static void CreateSeriesCollectionFromJson(List<TvShow> seriesCollection)
         {
             SeriesCollection = seriesCollection;
         }
@@ -46,12 +44,12 @@ namespace SerialReaderLibrary.Utils.Series.Collection
                 List<JToken> seriesCollection =
                     ((JArray)JsonConverter.ConvertJsonToObject(collectionInJson)).ToList();
 
-                List<SeriesGeneral> seriesCollectionMapped = new List<SeriesGeneral>();
+                List<TvShow> seriesCollectionMapped = new List<TvShow>();
 
                 foreach (JToken series in seriesCollection)
                 {
                     seriesCollectionMapped.Add(((JObject)JsonConverter.ConvertJsonToObject(series.ToString()))
-                        .ToObject<SeriesGeneral>());
+                        .ToObject<TvShow>());
                 }
 
                 CreateSeriesCollectionFromJson(seriesCollectionMapped);

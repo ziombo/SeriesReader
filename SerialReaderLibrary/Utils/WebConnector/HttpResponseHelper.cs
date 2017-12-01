@@ -9,23 +9,21 @@ using SerialReaderLibrary.ErrorHandling;
 
 namespace SerialReaderLibrary.Utils.WebConnector
 {
-    public static class HttpResponseHelper
+    public class HttpResponseHelper : IHttpResponseHelper
     {
-        public static bool IsResponseOk(HttpResponseMessage hrm)
+        public bool IsResponseStatusOk(HttpResponseMessage hrm)
         {
             return hrm.StatusCode == HttpStatusCode.OK;
         }
 
-        public static bool ValidateResponse(HttpResponseMessage hrm)
+        public bool HandleError(HttpResponseMessage responseMessage)
         {
-            switch (hrm.StatusCode)
+            switch (responseMessage.StatusCode)
             {
-                case HttpStatusCode.OK:
-                    return true;
                 case HttpStatusCode.NotFound:
-                    throw new DownloadSeriesException("Couldn't find series");
+                    throw new DownloadTvShowException("Couldn't find series");
                 default:
-                    throw new DownloadSeriesException("There was en error");
+                    throw new DownloadTvShowException("There was en error");
             }
         }
     }

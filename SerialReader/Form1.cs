@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using SerialReaderLibrary.ErrorHandling;
 using SerialReaderLibrary.Model;
-using SerialReaderLibrary.Utils.Series.Downloader;
+using SerialReaderLibrary.Utils.Series.Download;
 using SerialReaderLibrary.Utils.WebConnector;
 
 namespace SerialReader

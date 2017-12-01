@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SerialReaderLibrary.ErrorHandling
 {
-    public class DownloadSeriesException : Exception
+    public class DownloadTvShowException : Exception
     {
-        public DownloadSeriesException(string message) : base(message)
+        public DownloadTvShowException(string message) : base(message)
         {
         }
     }

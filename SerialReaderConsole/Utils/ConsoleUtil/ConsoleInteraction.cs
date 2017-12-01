@@ -1,6 +1,6 @@
 ﻿using System;
 using SerialReaderLibrary.Model;
-using SerialReaderLibrary.Utils.Series;
+using SerialReaderLibrary.Utils.TvShow;
 
 namespace SerialReaderConsole.Utils.ConsoleUtil
 {
@@ -54,7 +54,7 @@ namespace SerialReaderConsole.Utils.ConsoleUtil
         private static void FindSeries()
         {
             string seriesName = GetSeriesNameFromUser();
-            SeriesGeneral series = SeriesHandler.GetSeries(seriesName);
+            TvShow series = SeriesHandler.GetSeries(seriesName);
             DisplaySeriesDetailsToConsole(series);
 
         }
@@ -82,22 +82,22 @@ namespace SerialReaderConsole.Utils.ConsoleUtil
             Console.SetWindowPosition(0, 0);
         }
 
-        private static void DisplaySeriesDetailsToConsole(SeriesGeneral seriesGeneral)
+        private static void DisplaySeriesDetailsToConsole(TvShow tvShow)
         {
 
             ConsoleAppearance.WriteToConsoleColoured(ConsoleColor.Green, "Series: ");
-            ConsoleAppearance.WriteToConsoleColoured(ConsoleColor.White, seriesGeneral.Name, writeLine: true);
+            ConsoleAppearance.WriteToConsoleColoured(ConsoleColor.White, tvShow.Name, writeLine: true);
 
             ConsoleAppearance.WriteToConsoleColoured(ConsoleColor.Green, "Status: ");
-            ConsoleAppearance.WriteToConsoleColoured(ConsoleColor.White, seriesGeneral.Status, writeLine: true);
+            ConsoleAppearance.WriteToConsoleColoured(ConsoleColor.White, tvShow.Status, writeLine: true);
 
             ConsoleAppearance.WriteToConsoleColoured(ConsoleColor.Green, "NextEpisode: ");
-            ConsoleAppearance.WriteToConsoleColoured(ConsoleColor.White, seriesGeneral.NextEpisodeDate ?? "Unknown", writeLine: true);
+            ConsoleAppearance.WriteToConsoleColoured(ConsoleColor.White, tvShow.NextEpisodeDate ?? "Unknown", writeLine: true);
 
-            if (seriesGeneral.NextEpisodeDate != null)
+            if (tvShow.NextEpisodeDate != null)
             {
                 ConsoleAppearance.WriteToConsoleColoured(ConsoleColor.Green, "Days left: ");
-                ConsoleAppearance.WriteToConsoleColoured(ConsoleColor.White, GetDaysLeft(seriesGeneral.NextEpisodeDate), writeLine: true);
+                ConsoleAppearance.WriteToConsoleColoured(ConsoleColor.White, GetDaysLeft(tvShow.NextEpisodeDate), writeLine: true);
             }
 
             Console.WriteLine();

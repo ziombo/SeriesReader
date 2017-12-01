@@ -6,7 +6,7 @@ namespace SerialReaderLibrary.Utils.Files
     public static class FileOperations
     {
         /* 
-         * Mam liste SeriesGeneral -> formatuje ją w string JSON -> zapisuje string do pliku
+         * Mam liste TvShow -> formatuje ją w string JSON -> zapisuje string do pliku
            Odpalam program -> sprawdzam czy istnieje plik -> jeśli istnieje to go odczytuje
         */
 

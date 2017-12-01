@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using SerialReaderConsole.Utils.ConsoleUtil;
 using SerialReaderLibrary.Model;
-using SerialReaderLibrary.Utils.Series;
-using SerialReaderLibrary.Utils.Series.Collection;
-using SerialReaderLibrary.Utils.Series.Downloader;
+using SerialReaderLibrary.Utils.TvShow;
 
 namespace SerialReaderConsole
 {
@@ -30,7 +28,7 @@ namespace SerialReaderConsole
         /// </summary>
         /// <param name="seriesName"></param>
         /// <returns></returns>
-        public SeriesGeneral GetSeriesForConsole(string seriesName)
+        public TvShow GetSeriesForConsole(string seriesName)
         {
             return _seriesHandler.GetSeries(seriesName);
         }
