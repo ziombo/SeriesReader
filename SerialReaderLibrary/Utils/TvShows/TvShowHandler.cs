@@ -30,7 +30,7 @@ namespace SerialReaderLibrary.Utils.TvShows
 			// </1>
 
 			// <2> Download series from web
-			series = _seriesDownloader.DownloadSeriesAsync(seriesName).Result;
+			series = _seriesDownloader.GetSeriesAsync(seriesName).Result;
 			// </2>
 
 			// <3> Download nextEpisodeDate (could add: check if link is null)
@@ -52,7 +52,7 @@ namespace SerialReaderLibrary.Utils.TvShows
 				return series;
 
 
-			series = await _seriesDownloader.DownloadSeriesAsync(seriesName);
+			series = await _seriesDownloader.GetSeriesAsync(seriesName);
 
 			series.NextEpisodeDate = await _seriesDownloader.GetSeriesNextEpisodeDateAsync(series.NextEpisodeLink);
 

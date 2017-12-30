@@ -23,16 +23,16 @@ namespace SerialReaderLibrary.Utils.TvShows.Download
 			_responseHelper = responseHelper ?? throw new ArgumentNullException(nameof(responseHelper));
 		}
 
+		// GetSeries(seriesName: string) => download series -> check resposne -> return mapped series
 
-		public async Task<TvShow> DownloadSeriesAsync(string seriesName)
+		public async Task<TvShow> GetSeriesAsync(string seriesName)
 		{
-			HttpResponseMessage tvShowResponseMessage = await _seriesWebDownloader.GetSeriesDataAsync(seriesName);
+			HttpResponseMessage tvShowResponseMessage = await _seriesWebDownloader.DownloadSeriesDataAsync(seriesName);
 
 			if (!_responseHelper.IsResponseStatusOk(tvShowResponseMessage))
 			{
 				_responseHelper.HandleError(tvShowResponseMessage);
 			}
-
 
 			return _seriesMapper.MapToSeriesGeneral(tvShowResponseMessage);
 		}
@@ -44,7 +44,7 @@ namespace SerialReaderLibrary.Utils.TvShows.Download
 			if (String.IsNullOrEmpty(nextEpisodeLink))
 				return null;
 
-			HttpResponseMessage nextEpisodeResponseMessage = await _seriesWebDownloader.GetNextEpisodeDateAsync(nextEpisodeLink);
+			HttpResponseMessage nextEpisodeResponseMessage = await _seriesWebDownloader.DownloadNextEpisodeDateAsync(nextEpisodeLink);
 
 			if (!_responseHelper.IsResponseStatusOk(nextEpisodeResponseMessage))
 			{
