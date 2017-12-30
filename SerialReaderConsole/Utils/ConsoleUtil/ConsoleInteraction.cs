@@ -51,7 +51,7 @@ namespace SerialReaderConsole.Utils.ConsoleUtil
 
         private static void SaveCollectionToFile()
         {
-            SeriesHandler.SaveCollectionToFile();
+            //SeriesHandler.SaveCollectionToFile();
         }
 
         private static void FindSeries()
@@ -77,7 +77,7 @@ namespace SerialReaderConsole.Utils.ConsoleUtil
             Console.Clear();
             ConsoleAppearance.WriteToEndOfConsoleLine('═');
 
-            SeriesHandler.GetLocalSeriesCollection().ForEach(DisplaySeriesDetailsToConsole);
+            //SeriesHandler.GetLocalSeriesCollection().ForEach(DisplaySeriesDetailsToConsole);
 
             ConsoleAppearance.WriteToEndOfConsoleLine('═');
 
