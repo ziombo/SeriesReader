@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using SerialReaderLibrary.Model;
 using SerialReaderLibrary.Utils.Files;
@@ -10,71 +11,71 @@ namespace SerialReaderLibrary.Utils.TvShows
 	// highest level - responsible for main operation: download series, save series, load series.
 	public class TvShowHandler
 	{
+		private readonly ITvShowDownloader _tvShowDownloader;
+		private readonly TvShowCache _tvShowCache;
 
-		private readonly TvShowDownloader _seriesDownloader;
-
-
-		public TvShowHandler(TvShowDownloader seriesDownloader)
+		public TvShowHandler(ITvShowDownloader tvShowDownloader, TvShowCache tvShowCache)
 		{
-			_seriesDownloader = seriesDownloader;
+			_tvShowDownloader = tvShowDownloader ?? throw new ArgumentNullException(nameof(tvShowDownloader));
+			_tvShowCache = tvShowCache ?? throw new ArgumentNullException(nameof(tvShowCache));
 		}
 
 
 		public TvShow GetSeries(string seriesName)
 		{
-			TvShow series = new TvShow();
+			TvShow tvShow = new TvShow();
 
 			// <1> Check if series is already stored in memory. If yes then return it without downloading
-			if (TvShowCollectionHandler.IsSeriesAlreadyStored(seriesName, ref series))
-				return series;
+			if (_tvShowCache.IsSeriesAlreadyStored(seriesName, ref tvShow))
+				return tvShow;
 			// </1>
 
 			// <2> Download series from web
-			series = _seriesDownloader.GetSeriesAsync(seriesName).Result;
+			tvShow = _tvShowDownloader.GetSeriesAsync(seriesName).Result;
 			// </2>
 
 			// <3> Download nextEpisodeDate (could add: check if link is null)
-			series.NextEpisodeDate = _seriesDownloader.GetSeriesNextEpisodeDateAsync(series.NextEpisodeLink).Result;
+			tvShow.NextEpisodeDate = _tvShowDownloader.GetSeriesNextEpisodeDateAsync(tvShow.NextEpisodeLink).Result;
 			// </3>
 
 			// <4> Add new series to in-memory collection
-			TvShowCollectionHandler.SeriesCollection.Add(series);
+			_tvShowCache.AddSeriesToCollection(tvShow);
 			// </4>
 
-			return series;
+			return tvShow;
 		}
 
 		public async Task<TvShow> GetSeriesAsync(string seriesName)
 		{
 			TvShow series = new TvShow();
 
-			if (TvShowCollectionHandler.IsSeriesAlreadyStored(seriesName, ref series))
+			if (_tvShowCache.IsSeriesAlreadyStored(seriesName, ref series))
 				return series;
 
 
-			series = await _seriesDownloader.GetSeriesAsync(seriesName);
+			series = await _tvShowDownloader.GetSeriesAsync(seriesName);
 
-			series.NextEpisodeDate = await _seriesDownloader.GetSeriesNextEpisodeDateAsync(series.NextEpisodeLink);
+			series.NextEpisodeDate = await _tvShowDownloader.GetSeriesNextEpisodeDateAsync(series.NextEpisodeLink);
 
-			TvShowCollectionHandler.SeriesCollection.Add(series);
+			_tvShowCache.AddSeriesToCollection(series);
 
 			return series;
 		}
 
 		public List<TvShow> GetLocalSeriesCollection()
 		{
-			return TvShowCollectionHandler.SeriesCollection;
+			return (List<TvShow>)_tvShowCache.GetSeresCollection();
 		}
 
 		public void SaveCollectionToFile()
 		{
-			string seriesCollectionJson = JsonConverter.ConvertObjectToJson(TvShowCollectionHandler.SeriesCollection);
+			string seriesCollectionJson = JsonConverter.ConvertObjectToJson((List<TvShow>)_tvShowCache.GetSeresCollection());
 			FileOperations.SaveToAppData(seriesCollectionJson);
 		}
 
 		public void LoadCollectionFromFile()
 		{
-			TvShowCollectionHandler.LoadCollectionFromFile();
+			TvShowCache.LoadCollectionFromFile();
 		}
 	}
 }
