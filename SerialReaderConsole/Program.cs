@@ -10,6 +10,7 @@ using SerialReaderLibrary.Utils.TvShows.Download;
 using SerialReaderLibrary.Utils.TvShows.Mapper;
 using SerialReaderLibrary.Utils.WebConnector;
 using Unity;
+using TvShowHandler = SerialReaderConsole.TvShowExtensions.TvShowHandler;
 
 namespace SerialReaderConsole
 {
@@ -19,7 +20,7 @@ namespace SerialReaderConsole
 		{
 			// TODO: dodać event do SeriesReader żeby rzucało event jak błąd i wtedy na czilku się dopisujesz elo
 			// TODO: przy starcie porównywać daty z DateTime.Now, jeśli inna to ściągać na nowo
-
+			// TODO: TvShowHandlerWithLocal - decorator pattern dla Handlera, który bedize sprawdzał lokalną kolekcje.
 			// TODO: te funkcje do klasy związanej z console. webowa nie będzie zapisywać do pliku
 			//public void SaveCollectionToFile()
 			//{
