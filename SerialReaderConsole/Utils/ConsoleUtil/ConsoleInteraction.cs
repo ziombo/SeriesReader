@@ -1,12 +1,15 @@
 ﻿using System;
 using SerialReaderLibrary.Model;
-using SerialReaderLibrary.Utils.TvShow;
+using SerialReaderLibrary.Utils.TvShows;
+using SerialReaderLibrary.Utils.TvShows.Download;
+using SerialReaderLibrary.Utils.TvShows.Mapper;
+using SerialReaderLibrary.Utils.WebConnector;
 
 namespace SerialReaderConsole.Utils.ConsoleUtil
 {
     public static class ConsoleInteraction
     {
-        private static readonly SeriesHandler SeriesHandler = new SeriesHandler();
+        private static readonly ITvShowDownloader SeriesHandler = new TvShowDownloader(new TvShowWebDownloader(new HttpHandler()), new TvShowMapper(), new HttpResponseHelper());
 
         public static void DisplayConsoleMenu()
         {
@@ -54,7 +57,7 @@ namespace SerialReaderConsole.Utils.ConsoleUtil
         private static void FindSeries()
         {
             string seriesName = GetSeriesNameFromUser();
-            TvShow series = SeriesHandler.GetSeries(seriesName);
+            TvShow series = SeriesHandler.GetSeriesAsync(seriesName).Result;
             DisplaySeriesDetailsToConsole(series);
 
         }
