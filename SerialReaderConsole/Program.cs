@@ -20,6 +20,19 @@ namespace SerialReaderConsole
 			// TODO: dodać event do SeriesReader żeby rzucało event jak błąd i wtedy na czilku się dopisujesz elo
 			// TODO: przy starcie porównywać daty z DateTime.Now, jeśli inna to ściągać na nowo
 
+			// TODO: te funkcje do klasy związanej z console. webowa nie będzie zapisywać do pliku
+			//public void SaveCollectionToFile()
+			//{
+			//	string seriesCollectionJson = JsonConverter.ConvertObjectToJson((List<TvShow>)_tvShowCache.GetSeresCollection());
+			//	FileOperations.SaveToAppData(seriesCollectionJson);
+			//}
+
+			//public void LoadCollectionFromFile()
+			//{
+			//	TvShowCache.LoadCollectionFromFile();
+			//}
+
+
 			IUnityContainer container = new UnityContainer();
 
 			container.RegisterType<TvShowHandler, TvShowHandler>();

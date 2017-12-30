@@ -66,16 +66,5 @@ namespace SerialReaderLibrary.Utils.TvShows
 		{
 			return (List<TvShow>)_tvShowCache.GetSeresCollection();
 		}
-
-		public void SaveCollectionToFile()
-		{
-			string seriesCollectionJson = JsonConverter.ConvertObjectToJson((List<TvShow>)_tvShowCache.GetSeresCollection());
-			FileOperations.SaveToAppData(seriesCollectionJson);
-		}
-
-		public void LoadCollectionFromFile()
-		{
-			TvShowCache.LoadCollectionFromFile();
-		}
 	}
 }
