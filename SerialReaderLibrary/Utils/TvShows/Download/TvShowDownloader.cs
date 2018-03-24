@@ -27,13 +27,18 @@ namespace SerialReaderLibrary.Utils.TvShows.Download
 
 		public async Task<TvShow> GetSeriesAsync(string seriesName)
 		{
+			// <1> Download TvShow data: HttpResponseMessage
 			HttpResponseMessage tvShowResponseMessage = await _seriesWebDownloader.DownloadSeriesDataAsync(seriesName);
+			// </1>
 
+			// <2> Check if Response status is OK. If not -> handle it
 			if (!_responseHelper.IsResponseStatusOk(tvShowResponseMessage))
 			{
 				_responseHelper.HandleError(tvShowResponseMessage);
 			}
+			// </2>
 
+			// <3> Map HttpResponseMessage to TvShow and return it
 			return _seriesMapper.MapToSeriesGeneral(tvShowResponseMessage);
 		}
 

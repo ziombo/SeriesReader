@@ -1,0 +1,1 @@
+﻿TODO: Utils.Files - stworzyc NonWeb SerialReaderLibrary. Dla webowego czytanie plików niepotrzebne.

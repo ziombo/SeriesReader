@@ -18,8 +18,4 @@
     <ProjectReference Include="..\SerialReaderLibrary\SerialReaderLibrary.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Utils\Series\" />
-  </ItemGroup>
-
 </Project>
