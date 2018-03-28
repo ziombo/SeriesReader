@@ -5,6 +5,6 @@ namespace SerialReaderLibrary.Utils.TvShows.Mapper
 {
 	public interface ITvShowMapper
 	{
-		TvShow MapToSeriesGeneral(HttpResponseMessage responseMessage);
+		TvShow MapToTvShow(HttpResponseMessage responseMessage);
 	}
 }

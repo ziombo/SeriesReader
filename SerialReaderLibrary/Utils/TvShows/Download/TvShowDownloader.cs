@@ -24,7 +24,7 @@ namespace SerialReaderLibrary.Utils.TvShows.Download
 		public async Task<TvShow> GetTvShowAsync(string tvShowName)
 		{
 			HttpResponseMessage tvShowResponseMessage = await _tvShowWebDownloader.DownloadTvShowDataAsync(tvShowName);
-			TvShow show = _seriesMapper.MapToSeriesGeneral(tvShowResponseMessage);
+			TvShow show = _seriesMapper.MapToTvShow(tvShowResponseMessage);
 
 			return show;
 		}

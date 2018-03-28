@@ -5,10 +5,10 @@ namespace SerialReaderLibrary.Utils.TvShows.Mapper
 {
     public class TvShowMapper : ITvShowMapper
     {
-        public TvShow MapToSeriesGeneral(HttpResponseMessage seriesInfo)
+        public TvShow MapToTvShow(HttpResponseMessage seriesInfo)
         {
-            string seriesDataParsed = seriesInfo.Content.ReadAsStringAsync().Result;
-            return JsonConverter.ConvertJsonToObject<TvShow>(seriesDataParsed);
+            string tvShowDataParsed = seriesInfo.Content.ReadAsStringAsync().Result;
+            return JsonConverter.ConvertJsonToObject<TvShow>(tvShowDataParsed);
         }
     }
 }
