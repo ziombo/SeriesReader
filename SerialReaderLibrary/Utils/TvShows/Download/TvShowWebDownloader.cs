@@ -31,20 +31,5 @@ namespace SerialReaderLibrary.Utils.TvShows.Download
 
 			return tvShowResponseMessage;
 		}
-
-		//public async Task<HttpResponseMessage> DownloadNextEpisodeDateAsync(string seriesNextEpisodeLink)
-		//{
-		//	HttpResponseMessage nextEpisodeResponseMessage = await _httpHandler.GetAsync(seriesNextEpisodeLink);
-
-		//	// <2> Check if Response status is OK. If not -> handle it
-		//	if (!_responseHelper.IsResponseStatusOk(nextEpisodeResponseMessage))
-		//	{
-		//		_responseHelper.HandleError(nextEpisodeResponseMessage);
-		//	}
-		//	// </2>
-
-		//	return nextEpisodeResponseMessage;
-		//	//return await _httpHandler.GetAsync(seriesNextEpisodeLink);
-		//}
 	}
 }
