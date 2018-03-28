@@ -9,7 +9,7 @@ namespace SerialReaderConsole.Utils.ConsoleUtil
 {
     public static class ConsoleInteraction
     {
-        private static readonly ITvShowDownloader SeriesHandler = new TvShowDownloader(new TvShowWebDownloader(new HttpHandler()), new TvShowMapper(), new HttpResponseHelper());
+        private static readonly ITvShowDownloader SeriesHandler = new TvShowDownloader(new TvShowWebDownloader(new HttpHandler(), new HttpResponseHelper()), new TvShowMapper(), new HttpResponseHelper());
 
         public static void DisplayConsoleMenu()
         {
@@ -57,7 +57,7 @@ namespace SerialReaderConsole.Utils.ConsoleUtil
         private static void FindSeries()
         {
             string seriesName = GetSeriesNameFromUser();
-            TvShow series = SeriesHandler.GetSeriesAsync(seriesName).Result;
+            TvShow series = SeriesHandler.GetTvShowAsync(seriesName).Result;
             DisplaySeriesDetailsToConsole(series);
 
         }

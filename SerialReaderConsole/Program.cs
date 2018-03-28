@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 using SerialReaderConsole.Utils;
-using SerialReaderConsole.Utils.ConsoleUtil;
 using SerialReaderLibrary.Model;
-using SerialReaderLibrary.Utils.Files;
-using SerialReaderLibrary.Utils.TvShows;
-using SerialReaderLibrary.Utils.TvShows.Collection;
 using SerialReaderLibrary.Utils.TvShows.Download;
-using SerialReaderLibrary.Utils.TvShows.Mapper;
-using SerialReaderLibrary.Utils.WebConnector;
 using Unity;
 using TvShowHandler = SerialReaderConsole.TvShowExtensions.TvShowHandler;
 
@@ -37,10 +29,13 @@ namespace SerialReaderConsole
 			UnityContainerInitializer containerInitializer = new UnityContainerInitializer();
 			IUnityContainer container = containerInitializer.InitializeUnityContainer();
 
-			TvShowHandler seriesHandler = container.Resolve<TvShowHandler>();
+			TvShowDownloader tvShowDownloader = container.Resolve<TvShowDownloader>();
 
-			TvShow tvShow = seriesHandler.GetSeries("ray donovan");
-			Console.WriteLine(tvShow.ToString());
+
+			TvShow tvShow1 = tvShowDownloader.GetTvShowAsync("gotham").Result;
+			Console.WriteLine(tvShow1.ToString());
+			TvShow tvShow2 = tvShowDownloader.GetTvShowAsync("ray donovan").Result;
+			Console.WriteLine(tvShow2);
 			Console.ReadKey();
 			//ConsoleInteraction.DisplayConsoleMenu();
 		}

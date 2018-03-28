@@ -6,19 +6,18 @@ namespace SerialReaderLibrary.Model
 	{
 		public string Name { get; set; }
 		public string Status { get; set; }
-		public string NextEpisodeLink { get; set; }
 		public string NextEpisodeDate { get; set; }
 
-		public TvShow(string name = "", string status = "", string link = "")
+		public TvShow(string name = "", string status = "", string nextEpisodeDate = "")
 		{
 			Name = name;
 			Status = status;
-			NextEpisodeLink = link;
+			NextEpisodeDate = nextEpisodeDate;
 		}
 
 		public override string ToString()
 		{
-			return String.Format($"Name: {Name} \r\nStatus: {Status}");
+			return String.Format($"Name: {Name} \r\nStatus: {Status} \r\nNext Episode: {NextEpisodeDate}");
 		}
 	}
 }

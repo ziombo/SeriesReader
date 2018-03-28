@@ -52,13 +52,11 @@
     <Compile Include="Utils\Files\Interfaces\IGetFilesFromDir.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\JsonConverter.cs" />
-    <Compile Include="Utils\TvShows\Collection\TvShowCache.cs" />
     <Compile Include="Utils\TvShows\Download\ITvShowDownloader.cs" />
     <Compile Include="Utils\TvShows\Download\ITvShowWebDownloader.cs" />
     <Compile Include="Utils\TvShows\Download\TvShowWebDownloader.cs" />
     <Compile Include="Utils\TvShows\Mapper\ITvShowMapper.cs" />
     <Compile Include="Utils\TvShows\Mapper\TvShowMapper.cs" />
-    <Compile Include="Utils\TvShows\TvShowHandler.cs" />
     <Compile Include="Utils\WebConnector\HttpHandler.cs" />
     <Compile Include="Utils\WebConnector\HttpResponseHelper.cs" />
     <Compile Include="Utils\WebConnector\IHttpHandler.cs" />
@@ -68,6 +66,7 @@
     <Compile Include="Utils\WebConnector\IHttpResponseHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="IssueList.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

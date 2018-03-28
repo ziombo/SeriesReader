@@ -5,7 +5,6 @@ namespace SerialReaderLibrary.Utils.TvShows.Download
 {
 	public interface ITvShowDownloader
 	{
-		Task<TvShow> GetSeriesAsync(string seriesName);
-		Task<string> GetSeriesNextEpisodeDateAsync(string nextEpisodeLink);
+		Task<TvShow> GetTvShowAsync(string tvShowName);
 	}
 }
