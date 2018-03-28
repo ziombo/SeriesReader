@@ -10,11 +10,5 @@ namespace SerialReaderLibrary.Utils.TvShows.Mapper
             string seriesDataParsed = seriesInfo.Content.ReadAsStringAsync().Result;
             return JsonConverter.ConvertJsonToObject<TvShow>(seriesDataParsed);
         }
-
-        public string MapToNextEpisodeDate(HttpResponseMessage nextEpisodeResponse)
-        {
-            string nextEpDataParsed = nextEpisodeResponse.Content.ReadAsStringAsync().Result;
-            return JsonConverter.ConvertJsonToObject<string>(nextEpDataParsed);
-        }
     }
 }

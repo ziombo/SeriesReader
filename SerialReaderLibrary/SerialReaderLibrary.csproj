@@ -45,11 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ErrorHandling\DownloadTvShowException.cs" />
-    <Compile Include="Utils\Files\FileFinder.cs" />
-    <Compile Include="Utils\Files\FileOperations.cs" />
-    <Compile Include="Utils\Files\GetFilesFromDir.cs" />
-    <Compile Include="Utils\Files\Interfaces\IFolderBrowserDialogWrapper.cs" />
-    <Compile Include="Utils\Files\Interfaces\IGetFilesFromDir.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\JsonConverter.cs" />
     <Compile Include="Utils\TvShows\Download\ITvShowDownloader.cs" />
