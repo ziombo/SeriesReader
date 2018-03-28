@@ -6,6 +6,6 @@ namespace SerialReaderLibrary.Utils.TvShows.Download
     public interface ITvShowWebDownloader
     {
         Task<HttpResponseMessage> DownloadTvShowDataAsync(string seriesName);
-        Task<HttpResponseMessage> DownloadNextEpisodeDateAsync(string seriesNextEpisodeLink);
+        //Task<HttpResponseMessage> DownloadNextEpisodeDateAsync(string seriesNextEpisodeLink);
     }
 }
